@@ -1,0 +1,95 @@
+@if (state(); as state) {
+  @if (state.ok) {
+    @let course = state.value.course;
+    @let navigation = state.value.navigation;
+    <div class="container-page grid gap-10 py-10 sm:py-14 lg:grid-cols-[minmax(0,1fr)_22rem]">
+      <article aria-labelledby="lesson-title">
+        <a
+          [routerLink]="coursePath(course)"
+          class="inline-flex min-h-12 items-center gap-2 font-semibold text-ink-muted hover:text-ink"
+        >
+          <app-icon name="arrow-left" class="size-5" />
+          {{ course.title }}
+        </a>
+        <p class="eyebrow mt-4">Lección {{ navigation.position }} de {{ navigation.total }}</p>
+        <h1 id="lesson-title" class="mt-2 text-3xl font-extrabold sm:text-5xl">{{ navigation.lesson.title }}</h1>
+        @if (navigation.lesson.video; as video) {
+          <app-video-player class="mt-8" [video]="video" [title]="navigation.lesson.title" />
+        }
+
+        <nav aria-label="Navegación entre lecciones" class="mt-8 grid gap-3 sm:grid-cols-2">
+          @if (navigation.previous; as previous) {
+            <a
+              [routerLink]="lessonPathOf(course, previous.slug)"
+              class="card flex flex-col gap-1 p-5 transition-colors hover:border-ink"
+            >
+              <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-muted">
+                <app-icon name="arrow-left" class="size-4" />
+                Anterior
+              </span>
+              <span class="font-semibold">{{ previous.title }}</span>
+            </a>
+          } @else {
+            <span class="hidden sm:block" aria-hidden="true"></span>
+          }
+          @if (navigation.next; as next) {
+            <a
+              [routerLink]="lessonPathOf(course, next.slug)"
+              class="card flex flex-col items-end gap-1 p-5 text-right transition-colors hover:border-ink"
+            >
+              <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-muted">
+                Siguiente
+                <app-icon name="arrow-right" class="size-4" />
+              </span>
+              <span class="font-semibold">{{ next.title }}</span>
+            </a>
+          } @else {
+            <a
+              [routerLink]="coursePath(course)"
+              class="card flex flex-col items-end gap-1 p-5 text-right transition-colors hover:border-ink"
+            >
+              <span class="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-muted">
+                Volver al curso
+                <app-icon name="arrow-right" class="size-4" />
+              </span>
+              <span class="font-semibold">{{ course.title }}</span>
+            </a>
+          }
+        </nav>
+      </article>
+
+      <aside aria-labelledby="lesson-list-title">
+        <h2 id="lesson-list-title" class="text-xl font-bold">Lecciones</h2>
+        <app-lesson-list class="mt-4" [course]="course" [current]="navigation.lesson.slug" />
+      </aside>
+    </div>
+  } @else {
+    @switch (state.error.reason) {
+      @case ('course-not-found') {
+        <app-content-notice
+          title="No encontramos ese curso"
+          message="Puede que el enlace haya cambiado. Busca el curso desde su producto o servicio."
+          linkLabel="Ir al inicio del academy"
+          linkPath="/"
+        />
+      }
+      @case ('course-coming-soon') {
+        @let topic = topicLinkOf(state.error.course);
+        <app-content-notice
+          title="Este curso estará disponible pronto"
+          message="Estamos grabando sus lecciones. Mientras tanto, revisa el resto del contenido."
+          [linkLabel]="'Ver contenido de ' + topic.name"
+          [linkPath]="topic.path"
+        />
+      }
+      @default {
+        <app-content-notice
+          title="Esta lección no está disponible"
+          message="La lección no existe o todavía no está publicada. Sigue con las demás lecciones del curso."
+          linkLabel="Ir al curso"
+          [linkPath]="coursePath(state.error.course)"
+        />
+      }
+    }
+  }
+}

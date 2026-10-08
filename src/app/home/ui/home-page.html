@@ -1,0 +1,66 @@
+<section aria-labelledby="home-title" class="relative overflow-hidden">
+  <div class="notebook-grid absolute inset-0 -z-10" aria-hidden="true"></div>
+  <div class="container-page py-16 sm:py-24">
+    <p class="eyebrow">Pensil.Devs Academy</p>
+    <h1 id="home-title" class="mt-3 max-w-4xl text-5xl font-extrabold sm:text-7xl">
+      Aprende a sacarle <span class="scribble">provecho</span> a tu software
+    </h1>
+    <p class="mt-6 max-w-2xl text-xl text-ink-muted">
+      Cursos, videos y guías cortas para que tú y tu equipo dominen Pensil.Pos y todo lo que construimos
+      para tu negocio. Aprende a tu ritmo, cuando lo necesites.
+    </p>
+    <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+      <a [routerLink]="flagshipPath" class="btn-primary">
+        Empezar con Pensil.Pos
+        <app-icon name="arrow-right" class="size-5" />
+      </a>
+      <a href="#temas" class="btn-secondary">Ver todos los temas</a>
+    </div>
+  </div>
+</section>
+
+<section id="temas" aria-labelledby="topics-title" class="container-page scroll-mt-24 py-16 sm:py-24">
+  <app-section-heading
+    headingId="topics-title"
+    eyebrow="Temas"
+    title="Elige qué quieres aprender"
+    intro="El contenido está organizado por producto y por servicio, para que vayas directo a lo que usas."
+  />
+  @for (group of groups; track group.id) {
+    <h3 class="mt-12 font-sans text-lg font-semibold text-ink-muted">{{ group.label }}</h3>
+    <ul class="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      @for (topic of group.topics; track topic.slug) {
+        <li><app-topic-card [topic]="topic" [available]="availableOf(topic.slug)" /></li>
+      }
+    </ul>
+  }
+</section>
+
+@if (featured().length > 0) {
+  <section aria-labelledby="featured-title" class="bg-paper-sunken py-16 sm:py-24">
+    <div class="container-page">
+      <app-section-heading
+        headingId="featured-title"
+        eyebrow="Destacado"
+        title="Para empezar"
+        intro="Lo primero que te recomendamos ver."
+      />
+      <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        @for (content of featured(); track content.kind + content.slug) {
+          <li><app-content-card [content]="content" [topicName]="topicNameOf(content)" /></li>
+        }
+      </ul>
+    </div>
+  </section>
+}
+
+@if (latest().length > 0) {
+  <section aria-labelledby="latest-title" class="container-page py-16 sm:py-24">
+    <app-section-heading headingId="latest-title" eyebrow="Novedades" title="Lo más reciente" />
+    <ul class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      @for (content of latest(); track content.kind + content.slug) {
+        <li><app-content-card [content]="content" [topicName]="topicNameOf(content)" /></li>
+      }
+    </ul>
+  </section>
+}

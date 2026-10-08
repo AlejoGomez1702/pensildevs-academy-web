@@ -4,7 +4,8 @@ import { Component } from '@angular/core';
  * Pensil.Devs logo. The mark is the arriero mule from Pensilvania, Caldas (local roots), with a
  * one-eyed alien riding behind its head, its antennae ending in signal nodes (innovation).
  * This is the compact version, drawn with bold shapes for small sizes; it is also
- * public/favicon.svg. Fixed brand colors in both themes.
+ * public/favicon.svg. Fixed brand colors in both themes. In the academy the wordmark is followed by
+ * an "Academy" tag (small green piece, as the brand rules allow).
  */
 @Component({
   selector: 'app-logo',
@@ -43,6 +44,7 @@ import { Component } from '@angular/core';
     <span class="font-display text-xl font-extrabold tracking-tight">
       Pensil<span class="text-pencil-text">.Devs</span>
     </span>
+    <span class="rounded-full bg-leaf-soft px-2.5 py-0.5 text-sm font-semibold text-leaf-text">Academy</span>
   `,
 })
 export class Logo {}

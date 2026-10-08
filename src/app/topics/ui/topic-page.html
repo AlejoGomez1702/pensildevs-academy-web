@@ -1,0 +1,84 @@
+@if (topic(); as topic) {
+  <section aria-labelledby="topic-title" class="relative overflow-hidden">
+    <div class="notebook-grid absolute inset-0 -z-10" aria-hidden="true"></div>
+    <div class="container-page py-16 sm:py-20">
+      <span class="grid size-14 place-items-center rounded-2xl bg-leaf-soft text-leaf-text">
+        <app-icon [name]="topic.icon" class="size-7" />
+      </span>
+      <p class="eyebrow mt-6">{{ eyebrow() }}</p>
+      <h1 id="topic-title" class="mt-2 text-4xl font-extrabold sm:text-6xl">{{ topic.name }}</h1>
+      <p class="mt-5 max-w-2xl text-lg text-ink-muted">{{ topic.summary }}</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="topic-content-title" class="container-page pb-16 sm:pb-24">
+    <h2 id="topic-content-title" class="sr-only">Contenido de {{ topic.name }}</h2>
+    <nav aria-label="Filtrar por tipo" class="-mx-4 overflow-x-auto px-4">
+      <ul class="flex gap-2">
+        @for (option of filters; track option.kind) {
+          @let selected = kind() === option.kind;
+          @let count = availableOf(option.kind);
+          <li>
+            <a
+              [routerLink]="[]"
+              [queryParams]="{ tipo: option.segment }"
+              class="inline-flex min-h-12 items-center gap-2 rounded-full border px-5 font-semibold whitespace-nowrap transition-colors"
+              [class]="selected ? 'border-ink bg-ink text-paper' : 'border-line hover:border-ink'"
+              [attr.aria-current]="selected ? 'true' : null"
+            >
+              {{ option.label }}
+              @if (count !== null) {
+                <span class="text-sm" [class.text-ink-muted]="!selected">{{ count }}</span>
+              }
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <p aria-live="polite" class="mt-6 text-sm font-medium text-ink-muted">
+      @if (shelf.hasValue()) {
+        {{ resultsLabel() }}
+      }
+    </p>
+
+    @if (contents().length > 0) {
+      <ul class="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        @for (content of contents(); track content.kind + content.slug) {
+          <li><app-content-card [content]="content" /></li>
+        }
+      </ul>
+    } @else if (shelf.hasValue()) {
+      <div class="card mt-4 flex flex-col items-start gap-4 border-dashed p-8 shadow-none">
+        <p class="text-lg">{{ emptyLabel() }}</p>
+        @if (kind() !== 'all') {
+          <a [routerLink]="[]" [queryParams]="{ tipo: null }" class="text-link">Ver todo el contenido</a>
+        }
+      </div>
+    }
+  </section>
+
+  <section aria-labelledby="topic-cta-title" class="container-page pb-16 sm:pb-24">
+    <div class="card flex flex-col items-start gap-6 p-8 sm:p-12 lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <h2 id="topic-cta-title" class="text-3xl font-bold">¿Todavía no usas {{ topic.name }}?</h2>
+        <p class="mt-2 text-lg text-ink-muted">Conoce todo lo que puede hacer por tu negocio en Pensil.Devs.</p>
+      </div>
+      <a [href]="siteUrl()" class="btn-primary">
+        Conocer {{ topic.name }}
+        <app-icon name="arrow-right" class="size-5" />
+      </a>
+    </div>
+  </section>
+} @else {
+  <section aria-labelledby="topic-missing-title" class="container-page py-24 text-center sm:py-32">
+    <h1 id="topic-missing-title" class="text-4xl font-extrabold sm:text-5xl">No encontramos ese tema</h1>
+    <p class="mx-auto mt-4 max-w-md text-lg text-ink-muted">
+      Revisa la dirección o elige un producto o servicio desde el inicio.
+    </p>
+    <a routerLink="/" class="btn-primary mt-9">
+      Ir al inicio del academy
+      <app-icon name="arrow-right" class="size-5" />
+    </a>
+  </section>
+}

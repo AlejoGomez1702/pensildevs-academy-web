@@ -1,0 +1,113 @@
+<div class="container-page flex h-18 items-center justify-between gap-6">
+  <a routerLink="/" aria-label="Pensil.Devs Academy, ir al inicio" class="rounded-lg">
+    <app-logo />
+  </a>
+
+  <nav
+    #mainNavigation
+    aria-label="Principal"
+    class="hidden md:block"
+    (focusout)="closeSubmenuWhenFocusLeaves($event)"
+  >
+    <ul class="flex items-center gap-1">
+      @for (menu of menus; track menu.id) {
+        @let open = openSubmenu() === menu.id;
+        @let active = activeSection() === menu.id;
+        <li class="relative">
+          <button
+            type="button"
+            [id]="'submenu-trigger-' + menu.id"
+            class="inline-flex items-center gap-1 rounded-full px-4 py-2 font-medium transition-colors hover:text-ink"
+            [class.bg-paper-sunken]="active"
+            [class.text-ink]="open || active"
+            [class.text-ink-muted]="!open && !active"
+            [attr.aria-expanded]="open"
+            [attr.aria-controls]="'submenu-' + menu.id"
+            [attr.aria-current]="active ? 'true' : null"
+            (click)="toggleSubmenu(menu.id)"
+          >
+            {{ menu.label }}
+            <app-icon name="chevron-down" class="size-4 transition-transform" [class.rotate-180]="open" />
+          </button>
+          @if (open) {
+            <div
+              [id]="'submenu-' + menu.id"
+              class="card absolute top-full left-0 mt-3 w-88 max-w-[calc(100vw-2rem)] p-2"
+            >
+              <ul class="grid gap-1">
+                @for (link of menu.links; track link.path) {
+                  <li>
+                    <a
+                      [routerLink]="link.path"
+                      routerLinkActive="bg-paper-sunken"
+                      ariaCurrentWhenActive="page"
+                      class="block rounded-xl px-4 py-3 transition-colors hover:bg-paper-sunken"
+                      (click)="closeSubmenu()"
+                    >
+                      <span class="block font-semibold">{{ link.label }}</span>
+                      <span class="mt-0.5 block text-sm text-ink-muted">{{ link.description }}</span>
+                    </a>
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+        </li>
+      }
+    </ul>
+  </nav>
+
+  <a [href]="siteUrl" class="btn-secondary hidden md:inline-flex">
+    Ir a Pensil.Devs
+    <app-icon name="arrow-right" class="size-5" />
+  </a>
+
+  <button
+    #menuButton
+    type="button"
+    class="grid size-12 place-items-center rounded-full border border-line bg-paper-raised md:hidden"
+    aria-controls="mobile-menu"
+    [attr.aria-expanded]="menuOpen()"
+    (click)="toggleMenu()"
+  >
+    <app-icon [name]="menuOpen() ? 'close' : 'menu'" class="size-6" />
+    <span class="sr-only">{{ menuOpen() ? 'Cerrar menú' : 'Abrir menú' }}</span>
+  </button>
+</div>
+
+@if (menuOpen()) {
+  <nav
+    id="mobile-menu"
+    aria-label="Menú móvil"
+    class="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-line bg-paper md:hidden"
+  >
+    <ul class="container-page grid gap-5 py-5">
+      @for (menu of menus; track menu.id) {
+        <li>
+          <h2 [id]="'mobile-group-' + menu.id" class="px-4 font-sans text-sm font-semibold text-leaf-text">
+            {{ menu.label }}
+          </h2>
+          <ul [attr.aria-labelledby]="'mobile-group-' + menu.id" class="mt-1 grid gap-1">
+            @for (link of menu.links; track link.path) {
+              <li>
+                <a
+                  [routerLink]="link.path"
+                  routerLinkActive="bg-paper-sunken"
+                  ariaCurrentWhenActive="page"
+                  class="flex min-h-12 items-center rounded-xl px-4 text-lg font-semibold"
+                  (click)="closeMenu()"
+                >{{ link.label }}</a>
+              </li>
+            }
+          </ul>
+        </li>
+      }
+      <li class="grid">
+        <a [href]="siteUrl" class="btn-secondary">
+          Ir a Pensil.Devs
+          <app-icon name="arrow-right" class="size-5" />
+        </a>
+      </li>
+    </ul>
+  </nav>
+}

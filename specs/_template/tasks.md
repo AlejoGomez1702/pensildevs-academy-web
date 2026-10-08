@@ -1,0 +1,6 @@
+# NNN — Tareas
+
+Cada tarea empieza por la prueba que debe fallar.
+
+- [ ] 1. Prueba: … → Implementación: …
+- [ ] 2. Prueba: … → Implementación: …

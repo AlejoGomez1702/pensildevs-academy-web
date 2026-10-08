@@ -1,3 +1,220 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+/*
+ * Pensil.Devs design tokens. Source of truth for the design system.
+ * Concept: "del boceto al producto". White paper and graphite ink, with two pencil colors:
+ *   yellow (pencil) = action and attention: buttons, calls to action, highlights;
+ *   green  (leaf)   = companion accent and results: section labels, icons, success, growth, "done".
+ * Green accompanies; it never fills whole sections. Components only use these semantic tokens.
+ */
+:root {
+  color-scheme: light dark;
+
+  --paper: #ffffff;
+  --paper-raised: #ffffff;
+  --paper-sunken: #f4f2ed;
+  --ink: #16181d;
+  --ink-muted: #545a66;
+  --line: #e3ddcf;
+  --graphite: #16181d;
+  --on-graphite: #f5f3ee;
+  --leaf: #1d7a52;
+  --on-leaf: #ffffff;
+  --leaf-soft: #e3f2e8;
+  --leaf-text: #17704b;
+  --leaf-bright: #6fdca6;
+  --pencil: #f6b81c;
+  --pencil-strong: #e5a400;
+  --on-pencil: #16181d;
+  --pencil-text: #8a5800;
+  --focus: #1f5fd1;
+  --danger: #b42318;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #121419;
+    --paper-raised: #1a1d24;
+    --paper-sunken: #0d0f13;
+    --ink: #f2efe8;
+    --ink-muted: #a9aeb9;
+    --line: #2b2f38;
+    --graphite: #1f232b;
+    --on-graphite: #f5f3ee;
+    --leaf: #4cc38a;
+    --on-leaf: #0f1713;
+    --leaf-soft: #16291f;
+    --leaf-text: #6fd6a2;
+    --leaf-bright: #6fdca6;
+    --pencil: #f8c444;
+    --pencil-strong: #ffd166;
+    --on-pencil: #16181d;
+    --pencil-text: #f8c444;
+    --focus: #8ab4ff;
+    --danger: #ff9b8f;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-paper-sunken: var(--paper-sunken);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-graphite: var(--graphite);
+  --color-on-graphite: var(--on-graphite);
+  --color-leaf: var(--leaf);
+  --color-on-leaf: var(--on-leaf);
+  --color-leaf-soft: var(--leaf-soft);
+  --color-leaf-text: var(--leaf-text);
+  --color-leaf-bright: var(--leaf-bright);
+  --color-pencil: var(--pencil);
+  --color-pencil-strong: var(--pencil-strong);
+  --color-on-pencil: var(--on-pencil);
+  --color-pencil-text: var(--pencil-text);
+  --color-focus: var(--focus);
+  --color-danger: var(--danger);
+}
+
+/* Brand mark (logo and favicon): fixed colors, identical in both themes. */
+@theme {
+  --color-mark: #17704b;
+  --color-on-mark: #ffffff;
+  --color-mark-accent: #f6b81c;
+}
+
+@theme {
+  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --radius-card: 1.25rem;
+  --shadow-card: 0 1px 0 rgb(22 24 29 / 0.04), 0 8px 24px -12px rgb(22 24 29 / 0.18);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight text-balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 0.375rem;
+  }
+
+  ::selection {
+    background: var(--pencil);
+    color: var(--on-pencil);
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Section label: sentence case in the brand green, never all caps. */
+  .eyebrow {
+    @apply text-base font-semibold text-leaf-text;
+  }
+
+  .card {
+    @apply rounded-card border border-line bg-paper-raised shadow-(--shadow-card);
+  }
+
+  .form-control {
+    @apply min-h-12 w-full rounded-xl border border-line bg-paper px-4 py-3 text-base text-ink transition-colors placeholder:text-ink-muted hover:border-ink-muted focus-visible:border-ink aria-invalid:border-danger;
+  }
+
+  .form-error {
+    @apply flex items-center gap-1.5 text-sm font-medium text-danger;
+  }
+
+  .step-dot {
+    @apply grid size-7 shrink-0 place-items-center rounded-full bg-pencil text-sm font-bold text-on-pencil;
+  }
+
+  .text-link {
+    @apply font-semibold text-ink underline decoration-pencil decoration-2 underline-offset-4 hover:decoration-ink;
+  }
+
+  /* Hand-drawn pencil underline for key words. */
+  .scribble {
+    position: relative;
+    white-space: nowrap;
+    isolation: isolate;
+  }
+
+  .scribble::after {
+    content: '';
+    position: absolute;
+    inset: auto -0.08em -0.12em -0.08em;
+    height: 0.42em;
+    z-index: -1;
+    background: var(--pencil);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cpath d='M2 14 C 40 4, 90 6, 120 9 S 180 12, 198 6' fill='none' stroke='black' stroke-width='9' stroke-linecap='round'/%3E%3C/svg%3E")
+      center / 100% 100% no-repeat;
+  }
+
+  /* Notebook grid used behind hero sections. */
+  .notebook-grid {
+    /* Override --grid-line on dark surfaces (e.g. the green hero). */
+    background-image:
+      linear-gradient(to right, var(--grid-line, color-mix(in oklab, var(--line) 70%, transparent)) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line, color-mix(in oklab, var(--line) 70%, transparent)) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse at 50% 30%, black 35%, transparent 75%);
+  }
+}
+
+@utility btn {
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-base font-semibold whitespace-nowrap transition-[background-color,box-shadow,transform] duration-200 active:translate-y-px;
+}
+
+@utility btn-primary {
+  @apply btn bg-pencil text-on-pencil shadow-[0_2px_0_var(--pencil-strong)] hover:bg-pencil-strong;
+}
+
+@utility btn-secondary {
+  @apply btn border border-line bg-paper-raised text-ink hover:border-ink;
+}
+
+@utility btn-on-dark {
+  @apply btn border border-on-graphite/35 text-on-graphite hover:border-on-graphite/80 hover:bg-on-graphite/5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

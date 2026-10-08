@@ -52,17 +52,23 @@
       <div class="card mt-4 flex flex-col items-start gap-4 border-dashed p-8 shadow-none">
         <p class="text-lg">{{ emptyLabel() }}</p>
         @if (kind() !== 'all') {
-          <a [routerLink]="[]" [queryParams]="{ tipo: null }" class="text-link">Ver todo el contenido</a>
+          <a [routerLink]="[]" [queryParams]="{ tipo: null }" class="text-link"
+            >Ver todo el contenido</a
+          >
         }
       </div>
     }
   </section>
 
   <section aria-labelledby="topic-cta-title" class="container-page pb-16 sm:pb-24">
-    <div class="card flex flex-col items-start gap-6 p-8 sm:p-12 lg:flex-row lg:items-center lg:justify-between">
+    <div
+      class="card flex flex-col items-start gap-6 p-8 sm:p-12 lg:flex-row lg:items-center lg:justify-between"
+    >
       <div>
         <h2 id="topic-cta-title" class="text-3xl font-bold">¿Todavía no usas {{ topic.name }}?</h2>
-        <p class="mt-2 text-lg text-ink-muted">Conoce todo lo que puede hacer por tu negocio en Pensil.Devs.</p>
+        <p class="mt-2 text-lg text-ink-muted">
+          Conoce todo lo que puede hacer por tu negocio en Pensil.Devs.
+        </p>
       </div>
       <a [href]="siteUrl()" class="btn-primary">
         Conocer {{ topic.name }}
@@ -72,7 +78,9 @@
   </section>
 } @else {
   <section aria-labelledby="topic-missing-title" class="container-page py-24 text-center sm:py-32">
-    <h1 id="topic-missing-title" class="text-4xl font-extrabold sm:text-5xl">No encontramos ese tema</h1>
+    <h1 id="topic-missing-title" class="text-4xl font-extrabold sm:text-5xl">
+      No encontramos ese tema
+    </h1>
     <p class="mx-auto mt-4 max-w-md text-lg text-ink-muted">
       Revisa la dirección o elige un producto o servicio desde el inicio.
     </p>

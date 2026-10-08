@@ -1,6 +1,13 @@
 import { Component, computed, inject, input, resource } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ContentNotice, contentPath, lessonPath, VideoPlayer, WatchLesson, type Course } from '../../library';
+import {
+  ContentNotice,
+  contentPath,
+  lessonPath,
+  VideoPlayer,
+  WatchLesson,
+  type Course,
+} from '../../library';
 import { Icon } from '../../shared/ui/icon';
 import { topicLink, type TopicLink } from '../../topics';
 import { LessonList } from './lesson-list';

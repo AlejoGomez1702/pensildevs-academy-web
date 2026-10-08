@@ -22,7 +22,9 @@ import type { YouTubeVideoId } from '../domain/youtube-video-id';
   imports: [Icon],
   host: { class: 'block' },
   template: `
-    <div class="relative aspect-video overflow-hidden rounded-card bg-graphite text-on-graphite [--focus:var(--pencil)]">
+    <div
+      class="relative aspect-video overflow-hidden rounded-card bg-graphite text-on-graphite [--focus:var(--pencil)]"
+    >
       @if (playing()) {
         <iframe
           #frame
@@ -79,8 +81,12 @@ export class VideoPlayer {
   readonly title = input.required<string>();
 
   protected readonly playing = signal(false);
-  // Safe: the URL is built by YouTubeVideoId from a validated id, always on youtube-nocookie.com.
-  protected readonly embedUrl = computed(() => this.sanitizer.bypassSecurityTrustResourceUrl(this.video().embedUrl));
+  // Reviewed in docs/adr/0002-youtube-video-embedding.md: the URL is built by YouTubeVideoId from a
+  // validated 11-character id, always on youtube-nocookie.com; nothing typed by a visitor reaches it.
+  protected readonly embedUrl = computed(() =>
+    // eslint-disable-next-line sonarjs/no-angular-bypass-sanitization -- see docs/adr/0002-youtube-video-embedding.md
+    this.sanitizer.bypassSecurityTrustResourceUrl(this.video().embedUrl),
+  );
 
   protected play(): void {
     this.playing.set(true);

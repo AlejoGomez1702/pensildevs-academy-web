@@ -17,7 +17,11 @@ import { Icon } from '../../shared/ui/icon';
               <a
                 [routerLink]="pathOf(lesson.slug)"
                 class="flex min-h-12 items-center gap-4 rounded-2xl border p-4 transition-colors hover:border-ink"
-                [class]="lesson.slug === current() ? 'border-ink bg-paper-sunken' : 'border-line bg-paper-raised'"
+                [class]="
+                  lesson.slug === current()
+                    ? 'border-ink bg-paper-sunken'
+                    : 'border-line bg-paper-raised'
+                "
                 [attr.aria-current]="lesson.slug === current() ? 'page' : null"
               >
                 <span class="step-dot">{{ index + 1 }}</span>
@@ -28,8 +32,12 @@ import { Icon } from '../../shared/ui/icon';
                 </span>
               </a>
             } @else {
-              <div class="flex min-h-12 items-center gap-4 rounded-2xl border border-dashed border-line p-4">
-                <span class="grid size-7 shrink-0 place-items-center rounded-full bg-paper-sunken text-sm font-bold text-ink-muted">
+              <div
+                class="flex min-h-12 items-center gap-4 rounded-2xl border border-dashed border-line p-4"
+              >
+                <span
+                  class="grid size-7 shrink-0 place-items-center rounded-full bg-paper-sunken text-sm font-bold text-ink-muted"
+                >
                   {{ index + 1 }}
                 </span>
                 <span class="grow font-semibold text-ink-muted">{{ lesson.title }}</span>

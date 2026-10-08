@@ -3,7 +3,10 @@ import type { ActivatedRouteSnapshot, ResolveFn } from '@angular/router';
 import { OpenContent } from '../application/open-content';
 import type { ContentKind, LearningContent } from '../domain/learning-content';
 
-async function findContent(route: ActivatedRouteSnapshot, kind: ContentKind): Promise<LearningContent | null> {
+async function findContent(
+  route: ActivatedRouteSnapshot,
+  kind: ContentKind,
+): Promise<LearningContent | null> {
   const result = await inject(OpenContent).execute(kind, route.paramMap.get('slug') ?? '');
   if (result.ok) {
     return result.value.content;

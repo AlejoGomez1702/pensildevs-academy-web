@@ -20,7 +20,12 @@ import { topicLink } from '../../topics';
         @let topic = topicOf(video);
         <article aria-labelledby="content-title" class="container-page py-10 sm:py-14">
           <div class="max-w-4xl">
-            <app-content-heading kind="video" [title]="video.title" [topicName]="topic.name" [topicPath]="topic.path" />
+            <app-content-heading
+              kind="video"
+              [title]="video.title"
+              [topicName]="topic.name"
+              [topicPath]="topic.path"
+            />
             <p class="mt-4 inline-flex items-center gap-1.5 font-medium text-ink-muted">
               <app-icon name="clock" class="size-5" />
               {{ video.duration.format() }}

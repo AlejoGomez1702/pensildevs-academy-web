@@ -36,7 +36,12 @@ export interface RawCourse extends RawContentBase {
 export interface RawGuide extends RawContentBase {
   readonly kind: 'guide';
   readonly readingMinutes: number;
-  readonly sections: readonly { readonly id: string; readonly title: string; readonly intro?: string; readonly steps: readonly string[] }[];
+  readonly sections: readonly {
+    readonly id: string;
+    readonly title: string;
+    readonly intro?: string;
+    readonly steps: readonly string[];
+  }[];
 }
 
 export type RawContent = RawVideo | RawCourse | RawGuide;

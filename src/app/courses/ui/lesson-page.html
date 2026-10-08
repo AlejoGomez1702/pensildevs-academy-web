@@ -12,7 +12,9 @@
           {{ course.title }}
         </a>
         <p class="eyebrow mt-4">Lección {{ navigation.position }} de {{ navigation.total }}</p>
-        <h1 id="lesson-title" class="mt-2 text-3xl font-extrabold sm:text-5xl">{{ navigation.lesson.title }}</h1>
+        <h1 id="lesson-title" class="mt-2 text-3xl font-extrabold sm:text-5xl">
+          {{ navigation.lesson.title }}
+        </h1>
         @if (navigation.lesson.video; as video) {
           <app-video-player class="mt-8" [video]="video" [title]="navigation.lesson.title" />
         }

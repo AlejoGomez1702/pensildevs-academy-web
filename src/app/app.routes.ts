@@ -10,9 +10,18 @@ export const routes: Routes = [
     path: 'servicios',
     loadChildren: () => import('./topics/topics.routes').then((m) => m.topicRoutes('service')),
   },
-  { path: 'videos', loadChildren: () => import('./videos/videos.routes').then((m) => m.VIDEOS_ROUTES) },
-  { path: 'cursos', loadChildren: () => import('./courses/courses.routes').then((m) => m.COURSES_ROUTES) },
-  { path: 'guias', loadChildren: () => import('./guides/guides.routes').then((m) => m.GUIDES_ROUTES) },
+  {
+    path: 'videos',
+    loadChildren: () => import('./videos/videos.routes').then((m) => m.VIDEOS_ROUTES),
+  },
+  {
+    path: 'cursos',
+    loadChildren: () => import('./courses/courses.routes').then((m) => m.COURSES_ROUTES),
+  },
+  {
+    path: 'guias',
+    loadChildren: () => import('./guides/guides.routes').then((m) => m.GUIDES_ROUTES),
+  },
   {
     path: '**',
     title: 'Página no encontrada',

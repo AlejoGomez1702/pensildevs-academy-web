@@ -1,5 +1,11 @@
 import { Component, computed, inject, input, resource } from '@angular/core';
-import { ContentHeading, ContentNotice, OpenContent, RelatedContent, type Guide } from '../../library';
+import {
+  ContentHeading,
+  ContentNotice,
+  OpenContent,
+  RelatedContent,
+  type Guide,
+} from '../../library';
 import { Icon } from '../../shared/ui/icon';
 import { topicLink } from '../../topics';
 
@@ -15,7 +21,12 @@ import { topicLink } from '../../topics';
           <header class="relative overflow-hidden">
             <div class="notebook-grid absolute inset-0 -z-10" aria-hidden="true"></div>
             <div class="container-page py-14 sm:py-20">
-              <app-content-heading kind="guide" [title]="guide.title" [topicName]="topic.name" [topicPath]="topic.path" />
+              <app-content-heading
+                kind="guide"
+                [title]="guide.title"
+                [topicName]="topic.name"
+                [topicPath]="topic.path"
+              />
               <p class="mt-5 max-w-2xl text-lg text-ink-muted">{{ guide.summary }}</p>
               <p class="mt-4 inline-flex items-center gap-1.5 font-medium text-ink-muted">
                 <app-icon name="clock" class="size-5" />
@@ -26,14 +37,17 @@ import { topicLink } from '../../topics';
 
           <div class="container-page grid gap-12 pb-16 sm:pb-24 lg:grid-cols-[16rem_minmax(0,1fr)]">
             <nav aria-labelledby="guide-index-title" class="lg:sticky lg:top-24 lg:self-start">
-              <h2 id="guide-index-title" class="font-sans text-base font-semibold text-leaf-text">En esta guía</h2>
+              <h2 id="guide-index-title" class="font-sans text-base font-semibold text-leaf-text">
+                En esta guía
+              </h2>
               <ol class="mt-3 grid gap-1">
                 @for (section of guide.sections; track section.id) {
                   <li>
                     <a
                       [href]="'#' + section.id"
                       class="flex min-h-12 items-center rounded-xl px-3 font-medium text-ink-muted hover:bg-paper-sunken hover:text-ink"
-                    >{{ section.title }}</a>
+                      >{{ section.title }}</a
+                    >
                   </li>
                 }
               </ol>
@@ -41,8 +55,14 @@ import { topicLink } from '../../topics';
 
             <div class="grid max-w-2xl gap-12">
               @for (section of guide.sections; track section.id) {
-                <section [id]="section.id" [attr.aria-labelledby]="section.id + '-title'" class="scroll-mt-24">
-                  <h2 [id]="section.id + '-title'" class="text-2xl font-bold sm:text-3xl">{{ section.title }}</h2>
+                <section
+                  [id]="section.id"
+                  [attr.aria-labelledby]="section.id + '-title'"
+                  class="scroll-mt-24"
+                >
+                  <h2 [id]="section.id + '-title'" class="text-2xl font-bold sm:text-3xl">
+                    {{ section.title }}
+                  </h2>
                   @if (section.intro; as intro) {
                     <p class="mt-3 text-lg text-ink-muted">{{ intro }}</p>
                   }

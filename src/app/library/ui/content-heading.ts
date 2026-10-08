@@ -11,9 +11,11 @@ import { CONTENT_KIND } from './content-kind';
   template: `
     <p class="eyebrow">
       {{ kindLabel() }} ·
-      <a [routerLink]="topicPath()" class="underline decoration-2 underline-offset-4 hover:decoration-pencil">{{
-        topicName()
-      }}</a>
+      <a
+        [routerLink]="topicPath()"
+        class="underline decoration-2 underline-offset-4 hover:decoration-pencil"
+        >{{ topicName() }}</a
+      >
     </p>
     <h1 id="content-title" class="mt-2 text-4xl font-extrabold sm:text-5xl">{{ title() }}</h1>
   `,

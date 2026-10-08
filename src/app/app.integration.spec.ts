@@ -64,7 +64,9 @@ describe('Academy navigation (real routes and providers)', () => {
 
     expect(heading()).toBe('Conoce Pensil.Pos');
     expect(pageTitle()).toBe('Conoce Pensil.Pos · Pensil.Devs Academy');
-    expect(shell().querySelector('app-video-player button')?.textContent).toContain('Reproducir video');
+    expect(shell().querySelector('app-video-player button')?.textContent).toContain(
+      'Reproducir video',
+    );
     expect(shell().querySelector('main a[href="/productos/pensil-pos"]')).not.toBeNull();
     expect(text()).toContain('Sigue aprendiendo');
   });
@@ -84,12 +86,16 @@ describe('Academy navigation (real routes and providers)', () => {
     const start = Array.from(shell().querySelectorAll<HTMLAnchorElement>('main a')).find((link) =>
       link.textContent?.includes('Empezar el curso'),
     );
-    expect(start?.getAttribute('href')).toBe('/cursos/primeros-pasos-con-pensil-pos/conoce-pensil-pos');
+    expect(start?.getAttribute('href')).toBe(
+      '/cursos/primeros-pasos-con-pensil-pos/conoce-pensil-pos',
+    );
 
     await visit('/cursos/primeros-pasos-con-pensil-pos/conoce-pensil-pos');
 
     expect(heading()).toBe('Conoce Pensil.Pos');
-    expect(pageTitle()).toBe('Conoce Pensil.Pos · Primeros pasos con Pensil.Pos · Pensil.Devs Academy');
+    expect(pageTitle()).toBe(
+      'Conoce Pensil.Pos · Primeros pasos con Pensil.Pos · Pensil.Devs Academy',
+    );
     expect(text()).toContain('Lección 1 de 5');
   });
 
@@ -98,7 +104,9 @@ describe('Academy navigation (real routes and providers)', () => {
 
     expect(heading()).toBe('Cómo hacer el corte de caja');
     expect(shell().querySelector('main a[href="#si-no-cuadra"]')).not.toBeNull();
-    expect(shell().querySelector('main section#si-no-cuadra h2')?.textContent).toContain('Si el corte no cuadra');
+    expect(shell().querySelector('main section#si-no-cuadra h2')?.textContent).toContain(
+      'Si el corte no cuadra',
+    );
   });
 
   it.each([

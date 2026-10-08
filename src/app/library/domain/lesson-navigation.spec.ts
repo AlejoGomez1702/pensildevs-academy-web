@@ -23,15 +23,33 @@ describe('Lesson navigation', () => {
   };
 
   it('places the first lesson, with nothing before it', () => {
-    expect(slugsAround('one')).toEqual({ lesson: 'one', position: 1, total: 5, previous: undefined, next: 'three' });
+    expect(slugsAround('one')).toEqual({
+      lesson: 'one',
+      position: 1,
+      total: 5,
+      previous: undefined,
+      next: 'three',
+    });
   });
 
   it('skips lessons that are coming soon when moving back and forth', () => {
-    expect(slugsAround('three')).toEqual({ lesson: 'three', position: 3, total: 5, previous: 'one', next: 'four' });
+    expect(slugsAround('three')).toEqual({
+      lesson: 'three',
+      position: 3,
+      total: 5,
+      previous: 'one',
+      next: 'four',
+    });
   });
 
   it('has nothing after the last published lesson', () => {
-    expect(slugsAround('four')).toEqual({ lesson: 'four', position: 4, total: 5, previous: 'three', next: undefined });
+    expect(slugsAround('four')).toEqual({
+      lesson: 'four',
+      position: 4,
+      total: 5,
+      previous: 'three',
+      next: undefined,
+    });
   });
 
   it('refuses a lesson that does not exist', () => {

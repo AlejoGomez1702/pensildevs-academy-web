@@ -13,7 +13,8 @@ export const MOCK_CONTENT: readonly RawContent[] = [
     kind: 'video',
     slug: 'conoce-pensil-pos',
     title: 'Conoce Pensil.Pos',
-    summary: 'Un recorrido por Pensil.Pos: cómo se ve, qué puedes hacer desde el mostrador y por dónde empezar.',
+    summary:
+      'Un recorrido por Pensil.Pos: cómo se ve, qué puedes hacer desde el mostrador y por dónde empezar.',
     topic: 'pensil-pos',
     publishedOn: '2026-10-08',
     featured: true,
@@ -24,12 +25,18 @@ export const MOCK_CONTENT: readonly RawContent[] = [
     kind: 'course',
     slug: 'primeros-pasos-con-pensil-pos',
     title: 'Primeros pasos con Pensil.Pos',
-    summary: 'De cero a tu primera venta: conoce el sistema, carga tu catálogo, cobra y cierra la caja del día.',
+    summary:
+      'De cero a tu primera venta: conoce el sistema, carga tu catálogo, cobra y cierra la caja del día.',
     topic: 'pensil-pos',
     publishedOn: '2026-10-08',
     featured: true,
     lessons: [
-      { slug: 'conoce-pensil-pos', title: 'Conoce Pensil.Pos', youtubeUrl: PENSIL_POS_FIRST_VIDEO, durationSeconds: 300 },
+      {
+        slug: 'conoce-pensil-pos',
+        title: 'Conoce Pensil.Pos',
+        youtubeUrl: PENSIL_POS_FIRST_VIDEO,
+        durationSeconds: 300,
+      },
       { slug: 'carga-tu-catalogo', title: 'Carga tu catálogo de productos', durationSeconds: 420 },
       { slug: 'tu-primera-venta', title: 'Tu primera venta', durationSeconds: 360 },
       { slug: 'abre-y-cierra-la-caja', title: 'Abre y cierra la caja', durationSeconds: 300 },
@@ -40,7 +47,8 @@ export const MOCK_CONTENT: readonly RawContent[] = [
     kind: 'guide',
     slug: 'corte-de-caja',
     title: 'Cómo hacer el corte de caja',
-    summary: 'Cierra el turno sabiendo exactamente cuánto entró, por forma de pago, y qué hacer si no cuadra.',
+    summary:
+      'Cierra el turno sabiendo exactamente cuánto entró, por forma de pago, y qué hacer si no cuadra.',
     topic: 'pensil-pos',
     publishedOn: '2026-10-07',
     readingMinutes: 4,
@@ -90,7 +98,8 @@ export const MOCK_CONTENT: readonly RawContent[] = [
     kind: 'guide',
     slug: 'publica-tu-primer-producto',
     title: 'Publica tu primer producto',
-    summary: 'Sube un producto con fotos, precio y existencias para que tus clientes lo compren hoy mismo.',
+    summary:
+      'Sube un producto con fotos, precio y existencias para que tus clientes lo compren hoy mismo.',
     topic: 'tiendas-en-linea',
     publishedOn: '2026-10-06',
     readingMinutes: 3,
@@ -108,7 +117,10 @@ export const MOCK_CONTENT: readonly RawContent[] = [
         id: 'fotos',
         title: 'Fotos que venden',
         intro: 'Las fotos son lo primero que ve tu cliente.',
-        steps: ['Usa luz natural y fondo liso.', 'Sube al menos tres fotos: de frente, de lado y un detalle.'],
+        steps: [
+          'Usa luz natural y fondo liso.',
+          'Sube al menos tres fotos: de frente, de lado y un detalle.',
+        ],
       },
       {
         id: 'publicar',
@@ -153,13 +165,19 @@ export const MOCK_CONTENT: readonly RawContent[] = [
       {
         id: 'invitar',
         title: 'Invitar a una persona',
-        steps: ['Entra a Administración y elige Usuarios.', 'Escribe su correo y envía la invitación.'],
+        steps: [
+          'Entra a Administración y elige Usuarios.',
+          'Escribe su correo y envía la invitación.',
+        ],
       },
       {
         id: 'elegir-rol',
         title: 'Elegir su rol',
         intro: 'El rol decide qué partes del sistema ve.',
-        steps: ['Elige el rol que más se parece a su trabajo.', 'Ajusta los permisos sueltos solo si hace falta.'],
+        steps: [
+          'Elige el rol que más se parece a su trabajo.',
+          'Ajusta los permisos sueltos solo si hace falta.',
+        ],
       },
     ],
   },
@@ -214,7 +232,8 @@ export const MOCK_CONTENT: readonly RawContent[] = [
     kind: 'guide',
     slug: 'prepara-tu-proyecto',
     title: 'Prepara tu proyecto antes de la primera reunión',
-    summary: 'Lo que conviene tener claro para que la primera conversación rinda y la cotización sea precisa.',
+    summary:
+      'Lo que conviene tener claro para que la primera conversación rinda y la cotización sea precisa.',
     topic: 'consultoria-y-apps-moviles',
     publishedOn: '2026-10-03',
     readingMinutes: 3,
@@ -222,12 +241,18 @@ export const MOCK_CONTENT: readonly RawContent[] = [
       {
         id: 'el-problema',
         title: 'El problema',
-        steps: ['Escribe en dos líneas qué te duele hoy.', 'Anota quién lo sufre y cada cuánto pasa.'],
+        steps: [
+          'Escribe en dos líneas qué te duele hoy.',
+          'Anota quién lo sufre y cada cuánto pasa.',
+        ],
       },
       {
         id: 'lo-que-ya-tienes',
         title: 'Lo que ya tienes',
-        steps: ['Lista los sistemas, hojas de cálculo y apps que usas.', 'Junta ejemplos reales: una factura, un pedido, un reporte.'],
+        steps: [
+          'Lista los sistemas, hojas de cálculo y apps que usas.',
+          'Junta ejemplos reales: una factura, un pedido, un reporte.',
+        ],
       },
     ],
   },

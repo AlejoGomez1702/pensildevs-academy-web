@@ -2,7 +2,10 @@ import { isAvailable, type ContentKind, type LearningContent } from './learning-
 
 export type ContentKindFilter = ContentKind | 'all';
 
-export function byKind(shelf: readonly LearningContent[], kind: ContentKindFilter): readonly LearningContent[] {
+export function byKind(
+  shelf: readonly LearningContent[],
+  kind: ContentKindFilter,
+): readonly LearningContent[] {
   return kind === 'all' ? shelf : shelf.filter((content) => content.kind === kind);
 }
 
@@ -13,7 +16,8 @@ export function availableCount(shelf: readonly LearningContent[]): number {
 /** What can be opened comes first, newest first; what is coming soon goes last. */
 export function newestFirst(shelf: readonly LearningContent[]): readonly LearningContent[] {
   return [...shelf].sort(
-    (a, b) => Number(isAvailable(b)) - Number(isAvailable(a)) || b.publishedOn.localeCompare(a.publishedOn),
+    (a, b) =>
+      Number(isAvailable(b)) - Number(isAvailable(a)) || b.publishedOn.localeCompare(a.publishedOn),
   );
 }
 

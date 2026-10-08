@@ -44,7 +44,9 @@ import { Component } from '@angular/core';
     <span class="font-display text-xl font-extrabold tracking-tight">
       Pensil<span class="text-pencil-text">.Devs</span>
     </span>
-    <span class="rounded-full bg-leaf-soft px-2.5 py-0.5 text-sm font-semibold text-leaf-text">Academy</span>
+    <span class="rounded-full bg-leaf-soft px-2.5 py-0.5 text-sm font-semibold text-leaf-text"
+      >Academy</span
+    >
   `,
 })
 export class Logo {}

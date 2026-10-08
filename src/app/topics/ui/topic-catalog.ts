@@ -17,7 +17,8 @@ export const TOPICS: readonly CatalogTopic[] = [
     name: 'Pensil.Pos',
     group: 'product',
     icon: 'receipt',
-    summary: 'Aprende a vender, controlar tu inventario y cerrar la caja con el punto de venta de Pensil.Devs.',
+    summary:
+      'Aprende a vender, controlar tu inventario y cerrar la caja con el punto de venta de Pensil.Devs.',
   },
   {
     slug: 'tiendas-en-linea',
@@ -83,5 +84,7 @@ export interface TopicLink {
 /** Name and academy page of the topic a content belongs to; the home page if it is unknown. */
 export function topicLink(slug: string): TopicLink {
   const topic = findTopicBySlug(slug);
-  return topic ? { name: topic.name, path: topicPath(topic) } : { name: 'Pensil.Devs Academy', path: '/' };
+  return topic
+    ? { name: topic.name, path: topicPath(topic) }
+    : { name: 'Pensil.Devs Academy', path: '/' };
 }

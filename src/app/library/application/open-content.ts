@@ -9,8 +9,7 @@ export interface OpenedContent<T extends LearningContent> {
 }
 
 export type OpenContentError<T extends LearningContent> =
-  | { readonly reason: 'not-found' }
-  | { readonly reason: 'coming-soon'; readonly content: T };
+  { readonly reason: 'not-found' } | { readonly reason: 'coming-soon'; readonly content: T };
 
 /** Opens a video, a course or a guide, with more content of its topic to keep learning. */
 export class OpenContent {
@@ -21,7 +20,12 @@ export class OpenContent {
   async execute<K extends ContentKind>(
     kind: K,
     slug: string,
-  ): Promise<Result<OpenedContent<Extract<LearningContent, { kind: K }>>, OpenContentError<Extract<LearningContent, { kind: K }>>>> {
+  ): Promise<
+    Result<
+      OpenedContent<Extract<LearningContent, { kind: K }>>,
+      OpenContentError<Extract<LearningContent, { kind: K }>>
+    >
+  > {
     const shelf = await this.library.allContent();
     const content = shelf.find(
       (candidate): candidate is Extract<LearningContent, { kind: K }> =>

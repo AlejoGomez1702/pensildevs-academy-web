@@ -29,7 +29,9 @@ describe('Lesson page', () => {
     expect(page.querySelector('h1')?.textContent?.trim()).toBe('Conoce Pensil.Pos');
     expect(text()).toContain('Lección 1 de 5');
     expect(page.querySelector('app-video-player')).not.toBeNull();
-    expect(page.querySelector(`a[href="/cursos/${COURSE}"]`)?.textContent).toContain('Primeros pasos con Pensil.Pos');
+    expect(page.querySelector(`a[href="/cursos/${COURSE}"]`)?.textContent).toContain(
+      'Primeros pasos con Pensil.Pos',
+    );
   });
 
   it('lists every lesson, marking the current one and leaving the ones coming soon unlinked', async () => {
@@ -49,16 +51,21 @@ describe('Lesson page', () => {
 
     const pager = page.querySelector<HTMLElement>('nav[aria-label="Navegación entre lecciones"]');
     expect(pager?.textContent).not.toContain('Anterior');
-    expect(pager?.querySelector(`a[href="/cursos/${COURSE}"]`)?.textContent).toContain('Volver al curso');
+    expect(pager?.querySelector(`a[href="/cursos/${COURSE}"]`)?.textContent).toContain(
+      'Volver al curso',
+    );
   });
 
-  it.each(['no-existe', 'carga-tu-catalogo'])('explains that lesson "%s" is not available and links to the course', async (lesson) => {
-    await visit(COURSE, lesson);
+  it.each(['no-existe', 'carga-tu-catalogo'])(
+    'explains that lesson "%s" is not available and links to the course',
+    async (lesson) => {
+      await visit(COURSE, lesson);
 
-    expect(page.querySelector('h1')?.textContent?.trim()).toBe('Esta lección no está disponible');
-    expect(page.querySelector(`a[href="/cursos/${COURSE}"]`)).not.toBeNull();
-    expect(page.querySelector('app-video-player')).toBeNull();
-  });
+      expect(page.querySelector('h1')?.textContent?.trim()).toBe('Esta lección no está disponible');
+      expect(page.querySelector(`a[href="/cursos/${COURSE}"]`)).not.toBeNull();
+      expect(page.querySelector('app-video-player')).toBeNull();
+    },
+  );
 
   it('explains when the course does not exist', async () => {
     await visit('no-existe', 'uno');

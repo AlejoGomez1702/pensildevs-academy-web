@@ -1,4 +1,11 @@
-import { findTopic, PENSIL_DEVS_URL, topicPath, TOPICS, topicsOf, topicSiteUrl } from './topic-catalog';
+import {
+  findTopic,
+  PENSIL_DEVS_URL,
+  topicPath,
+  TOPICS,
+  topicsOf,
+  topicSiteUrl,
+} from './topic-catalog';
 
 describe('Topic catalog', () => {
   it('teaches about Pensil.Pos as a product and the four services of pensildevs.com', () => {

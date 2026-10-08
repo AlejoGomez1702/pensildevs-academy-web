@@ -24,6 +24,8 @@ describe('App shell', () => {
     const shell = fixture.nativeElement as HTMLElement;
 
     expect(shell.querySelector('app-site-header nav[aria-label="Principal"]')).not.toBeNull();
-    expect(shell.querySelector('app-site-footer a[href="/"]')?.getAttribute('aria-label')).toBe('Pensil.Devs Academy, ir al inicio');
+    expect(shell.querySelector('app-site-footer a[href="/"]')?.getAttribute('aria-label')).toBe(
+      'Pensil.Devs Academy, ir al inicio',
+    );
   });
 });

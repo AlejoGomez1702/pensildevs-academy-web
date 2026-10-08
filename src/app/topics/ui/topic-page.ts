@@ -12,7 +12,10 @@ import { Icon } from '../../shared/ui/icon';
 import type { TopicGroup } from '../domain/topic';
 import { findTopic, topicSiteUrl } from './topic-catalog';
 
-const GROUP_EYEBROW: Readonly<Record<TopicGroup, string>> = { product: 'Producto', service: 'Servicio' };
+const GROUP_EYEBROW: Readonly<Record<TopicGroup, string>> = {
+  product: 'Producto',
+  service: 'Servicio',
+};
 const ALL = { label: 'Todos', singular: 'contenido', plural: 'contenidos' };
 
 interface FilterOption {
@@ -24,7 +27,11 @@ interface FilterOption {
 
 const FILTERS: readonly FilterOption[] = [
   { kind: 'all', label: ALL.label, segment: null },
-  ...CONTENT_KINDS.map((kind) => ({ kind, label: CONTENT_KIND[kind].plural, segment: CONTENT_KIND[kind].segment })),
+  ...CONTENT_KINDS.map((kind) => ({
+    kind,
+    label: CONTENT_KIND[kind].plural,
+    segment: CONTENT_KIND[kind].segment,
+  })),
 ];
 
 @Component({
@@ -57,11 +64,16 @@ export class TopicPage {
     loader: ({ params }) => this.exploreTopic.execute(params.topicSlug, params.kind),
   });
 
-  protected readonly contents = computed(() => (this.shelf.hasValue() ? this.shelf.value().contents : []));
+  protected readonly contents = computed(() =>
+    this.shelf.hasValue() ? this.shelf.value().contents : [],
+  );
   protected readonly resultsLabel = computed(() => {
     const count = this.contents().length;
     const kind = this.kind();
-    const words = kind === 'all' ? ALL : { singular: CONTENT_KIND[kind].label, plural: CONTENT_KIND[kind].plural };
+    const words =
+      kind === 'all'
+        ? ALL
+        : { singular: CONTENT_KIND[kind].label, plural: CONTENT_KIND[kind].plural };
     return `${count} ${(count === 1 ? words.singular : words.plural).toLowerCase()}`;
   });
   protected readonly emptyLabel = computed(() => {

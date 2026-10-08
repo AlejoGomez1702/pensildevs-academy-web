@@ -21,12 +21,16 @@ import { topicPath, type CatalogTopic } from './topic-catalog';
         <a
           [routerLink]="path()"
           class="after:absolute after:inset-0 after:rounded-card focus-visible:outline-none focus-visible:after:outline-3 focus-visible:after:outline-offset-3 focus-visible:after:outline-focus"
-        >{{ topic().name }}</a>
+          >{{ topic().name }}</a
+        >
       </h3>
       <p class="mt-2 grow text-ink-muted">{{ topic().summary }}</p>
       <p class="mt-5 inline-flex items-center gap-1 font-semibold">
         {{ countLabel() }}
-        <app-icon name="arrow-right" class="size-4 transition-transform group-hover:translate-x-1" />
+        <app-icon
+          name="arrow-right"
+          class="size-4 transition-transform group-hover:translate-x-1"
+        />
       </p>
     </article>
   `,

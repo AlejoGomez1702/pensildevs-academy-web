@@ -42,7 +42,12 @@ function toLearningContent(raw: RawContent): Conversion<LearningContent> {
     case 'video': {
       const video = toVideoId(raw.youtubeUrl);
       return video.ok
-        ? ok({ ...base, kind: 'video', video: video.value, duration: Duration.ofSeconds(raw.durationSeconds) })
+        ? ok({
+            ...base,
+            kind: 'video',
+            video: video.value,
+            duration: Duration.ofSeconds(raw.durationSeconds),
+          })
         : video;
     }
     case 'course': {
@@ -50,14 +55,24 @@ function toLearningContent(raw: RawContent): Conversion<LearningContent> {
       return lessons.ok ? ok({ ...base, kind: 'course', lessons: lessons.value }) : lessons;
     }
     case 'guide':
-      return ok({ ...base, kind: 'guide', readingTime: Duration.ofMinutes(raw.readingMinutes), sections: raw.sections });
+      return ok({
+        ...base,
+        kind: 'guide',
+        readingTime: Duration.ofMinutes(raw.readingMinutes),
+        sections: raw.sections,
+      });
   }
 }
 
 function toLesson(raw: RawLesson): Conversion<Lesson> {
   const video = toVideoId(raw.youtubeUrl);
   return video.ok
-    ? ok({ slug: raw.slug, title: raw.title, video: video.value, duration: Duration.ofSeconds(raw.durationSeconds) })
+    ? ok({
+        slug: raw.slug,
+        title: raw.title,
+        video: video.value,
+        duration: Duration.ofSeconds(raw.durationSeconds),
+      })
     : err(`lesson "${raw.slug}": ${video.error}`);
 }
 

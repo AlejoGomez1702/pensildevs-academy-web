@@ -13,10 +13,16 @@ describe('Mock library (real test data)', () => {
   it('publishes the first Pensil.Pos video, as a video and as the first lesson of the starter course', async () => {
     const shelf = await new MockLibrary(MOCK_CONTENT).allContent();
 
-    const video = shelf.find((content): content is Video => content.kind === 'video' && content.topicSlug === 'pensil-pos' && isAvailable(content));
+    const video = shelf.find(
+      (content): content is Video =>
+        content.kind === 'video' && content.topicSlug === 'pensil-pos' && isAvailable(content),
+    );
     expect(video?.video?.value).toBe('oFdO0jTK0n8');
 
-    const course = shelf.find((content): content is Course => content.kind === 'course' && content.topicSlug === 'pensil-pos');
+    const course = shelf.find(
+      (content): content is Course =>
+        content.kind === 'course' && content.topicSlug === 'pensil-pos',
+    );
     expect(course?.lessons[0]?.video?.value).toBe('oFdO0jTK0n8');
   });
 
@@ -45,7 +51,9 @@ describe('Mock library (real test data)', () => {
       summary: 'A lesson points to another site.',
       topic: 'pensil-pos',
       publishedOn: '2026-10-08',
-      lessons: [{ slug: 'one', title: 'One', youtubeUrl: 'https://vimeo.com/1', durationSeconds: 60 }],
+      lessons: [
+        { slug: 'one', title: 'One', youtubeUrl: 'https://vimeo.com/1', durationSeconds: 60 },
+      ],
     };
 
     expect(await new MockLibrary([raw]).allContent()).toEqual([]);

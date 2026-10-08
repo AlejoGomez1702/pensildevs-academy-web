@@ -15,9 +15,9 @@ describe('Topic page', () => {
     await fixture.whenStable();
   };
   const filter = (label: string) =>
-    Array.from(page.querySelectorAll<HTMLAnchorElement>('nav[aria-label="Filtrar por tipo"] a')).find((link) =>
-      link.textContent?.trim().startsWith(label),
-    );
+    Array.from(
+      page.querySelectorAll<HTMLAnchorElement>('nav[aria-label="Filtrar por tipo"] a'),
+    ).find((link) => link.textContent?.trim().startsWith(label));
   const cards = () => page.querySelectorAll('app-content-card');
   const text = () => page.textContent?.replace(/\s+/g, ' ') ?? '';
 
@@ -58,14 +58,18 @@ describe('Topic page', () => {
 
     expect(cards()).toHaveLength(0);
     expect(text()).toContain('Todavía no hay cursos de Desarrollo web a la medida');
-    const seeAll = Array.from(page.querySelectorAll('a')).find((link) => link.textContent?.includes('Ver todo'));
+    const seeAll = Array.from(page.querySelectorAll('a')).find((link) =>
+      link.textContent?.includes('Ver todo'),
+    );
     expect(seeAll?.getAttribute('href')).toBe('/');
   });
 
   it('invites to discover the topic on pensildevs.com', async () => {
     await visit('service', 'tiendas-en-linea');
 
-    const link = page.querySelector<HTMLAnchorElement>('a[href="https://pensildevs.com/servicios/tiendas-en-linea"]');
+    const link = page.querySelector<HTMLAnchorElement>(
+      'a[href="https://pensildevs.com/servicios/tiendas-en-linea"]',
+    );
     expect(link).not.toBeNull();
     expect(link?.hasAttribute('target')).toBe(false);
   });

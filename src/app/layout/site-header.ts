@@ -40,7 +40,8 @@ export class SiteHeader {
   protected readonly menuOpen = signal(false);
   protected readonly openSubmenu = signal<string | null>(null);
   protected readonly activeSection = computed(
-    () => NAVIGATION_MENUS.find((menu) => isWithinSection(this.currentUrl(), menu.path))?.id ?? null,
+    () =>
+      NAVIGATION_MENUS.find((menu) => isWithinSection(this.currentUrl(), menu.path))?.id ?? null,
   );
 
   protected toggleMenu(): void {

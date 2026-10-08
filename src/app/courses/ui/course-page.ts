@@ -27,7 +27,12 @@ import { LessonList } from './lesson-list';
           <div class="notebook-grid absolute inset-0 -z-10" aria-hidden="true"></div>
           <div class="container-page grid gap-12 py-14 sm:py-20 lg:grid-cols-[minmax(0,1fr)_26rem]">
             <div>
-              <app-content-heading kind="course" [title]="course.title" [topicName]="topic.name" [topicPath]="topic.path" />
+              <app-content-heading
+                kind="course"
+                [title]="course.title"
+                [topicName]="topic.name"
+                [topicPath]="topic.path"
+              />
               <p class="mt-5 max-w-2xl text-lg text-ink-muted">{{ course.summary }}</p>
               <ul class="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-medium text-ink-muted">
                 <li class="inline-flex items-center gap-1.5">

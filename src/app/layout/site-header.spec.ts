@@ -11,9 +11,12 @@ describe('Site header', () => {
   let header: HTMLElement;
 
   const menuButton = () =>
-    header.querySelector<HTMLButtonElement>('button[aria-controls="mobile-menu"]') as HTMLButtonElement;
+    header.querySelector<HTMLButtonElement>(
+      'button[aria-controls="mobile-menu"]',
+    ) as HTMLButtonElement;
   const mobileMenu = () => header.querySelector<HTMLElement>('#mobile-menu');
-  const mainNavigation = () => header.querySelector<HTMLElement>('nav[aria-label="Principal"]') as HTMLElement;
+  const mainNavigation = () =>
+    header.querySelector<HTMLElement>('nav[aria-label="Principal"]') as HTMLElement;
   const trigger = (label: string) => {
     const button = Array.from(mainNavigation().querySelectorAll('button')).find(
       (element) => element.textContent?.trim() === label,
@@ -65,7 +68,9 @@ describe('Site header', () => {
       await settle();
 
       expect(trigger('Productos').getAttribute('aria-expanded')).toBe('true');
-      expect(submenuOf('Productos')?.querySelector('a[href="/productos/pensil-pos"]')?.textContent).toContain('Pensil.Pos');
+      expect(
+        submenuOf('Productos')?.querySelector('a[href="/productos/pensil-pos"]')?.textContent,
+      ).toContain('Pensil.Pos');
     });
 
     it('opens the services submenu with the academy page of each service', async () => {
@@ -106,7 +111,9 @@ describe('Site header', () => {
       trigger('Productos').click();
       await settle();
       const outside = header.querySelector('a[href="/"]') as HTMLElement;
-      trigger('Productos').dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: outside }));
+      trigger('Productos').dispatchEvent(
+        new FocusEvent('focusout', { bubbles: true, relatedTarget: outside }),
+      );
       await settle();
       expect(submenuOf('Productos')).toBeNull();
     });
@@ -116,7 +123,9 @@ describe('Site header', () => {
       await settle();
 
       const inside = submenuOf('Productos')?.querySelector('a') as HTMLElement;
-      trigger('Productos').dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: inside }));
+      trigger('Productos').dispatchEvent(
+        new FocusEvent('focusout', { bubbles: true, relatedTarget: inside }),
+      );
       await settle();
 
       expect(submenuOf('Productos')).not.toBeNull();
@@ -126,7 +135,9 @@ describe('Site header', () => {
       trigger('Servicios').click();
       await settle();
 
-      submenuOf('Servicios')?.querySelector<HTMLAnchorElement>('a[href="/servicios/automatizacion"]')?.click();
+      submenuOf('Servicios')
+        ?.querySelector<HTMLAnchorElement>('a[href="/servicios/automatizacion"]')
+        ?.click();
       await settle();
 
       expect(TestBed.inject(Router).url).toBe('/servicios/automatizacion');
@@ -142,9 +153,9 @@ describe('Site header', () => {
 
       trigger('Productos').click();
       await settle();
-      expect(submenuOf('Productos')?.querySelector('a[aria-current="page"]')?.getAttribute('href')).toBe(
-        '/productos/pensil-pos',
-      );
+      expect(
+        submenuOf('Productos')?.querySelector('a[aria-current="page"]')?.getAttribute('href'),
+      ).toBe('/productos/pensil-pos');
     });
   });
 
@@ -165,7 +176,9 @@ describe('Site header', () => {
       menuButton().click();
       await settle();
 
-      const groups = Array.from(mobileMenu()?.querySelectorAll('h2') ?? []).map((title) => title.textContent?.trim());
+      const groups = Array.from(mobileMenu()?.querySelectorAll('h2') ?? []).map((title) =>
+        title.textContent?.trim(),
+      );
       expect(groups).toEqual(['Productos', 'Servicios']);
       expect(mobileMenu()?.querySelector('a[href="/productos/pensil-pos"]')).not.toBeNull();
       expect(mobileMenu()?.querySelectorAll('a[href^="/servicios/"]')).toHaveLength(4);

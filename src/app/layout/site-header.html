@@ -27,7 +27,11 @@
             (click)="toggleSubmenu(menu.id)"
           >
             {{ menu.label }}
-            <app-icon name="chevron-down" class="size-4 transition-transform" [class.rotate-180]="open" />
+            <app-icon
+              name="chevron-down"
+              class="size-4 transition-transform"
+              [class.rotate-180]="open"
+            />
           </button>
           @if (open) {
             <div
@@ -45,7 +49,9 @@
                       (click)="closeSubmenu()"
                     >
                       <span class="block font-semibold">{{ link.label }}</span>
-                      <span class="mt-0.5 block text-sm text-ink-muted">{{ link.description }}</span>
+                      <span class="mt-0.5 block text-sm text-ink-muted">{{
+                        link.description
+                      }}</span>
                     </a>
                   </li>
                 }
@@ -84,7 +90,10 @@
     <ul class="container-page grid gap-5 py-5">
       @for (menu of menus; track menu.id) {
         <li>
-          <h2 [id]="'mobile-group-' + menu.id" class="px-4 font-sans text-sm font-semibold text-leaf-text">
+          <h2
+            [id]="'mobile-group-' + menu.id"
+            class="px-4 font-sans text-sm font-semibold text-leaf-text"
+          >
             {{ menu.label }}
           </h2>
           <ul [attr.aria-labelledby]="'mobile-group-' + menu.id" class="mt-1 grid gap-1">
@@ -96,7 +105,8 @@
                   ariaCurrentWhenActive="page"
                   class="flex min-h-12 items-center rounded-xl px-4 text-lg font-semibold"
                   (click)="closeMenu()"
-                >{{ link.label }}</a>
+                  >{{ link.label }}</a
+                >
               </li>
             }
           </ul>

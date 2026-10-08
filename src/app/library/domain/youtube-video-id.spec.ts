@@ -36,7 +36,9 @@ describe('YouTubeVideoId', () => {
   it('builds a privacy-enhanced embed that starts playing and keeps suggestions from this channel', () => {
     const id = YouTubeVideoId.parse(ID);
 
-    expect(id.ok && id.value.embedUrl).toBe(`https://www.youtube-nocookie.com/embed/${ID}?autoplay=1&rel=0`);
+    expect(id.ok && id.value.embedUrl).toBe(
+      `https://www.youtube-nocookie.com/embed/${ID}?autoplay=1&rel=0`,
+    );
     expect(id.ok && id.value.watchUrl).toBe(`https://www.youtube.com/watch?v=${ID}`);
   });
 });

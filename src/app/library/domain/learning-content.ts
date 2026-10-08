@@ -70,7 +70,9 @@ export function contentDuration(content: LearningContent): Duration {
     case 'video':
       return content.duration;
     case 'course':
-      return Duration.sum(content.lessons.filter(isPublishedLesson).map((lesson) => lesson.duration));
+      return Duration.sum(
+        content.lessons.filter(isPublishedLesson).map((lesson) => lesson.duration),
+      );
     case 'guide':
       return content.readingTime;
   }

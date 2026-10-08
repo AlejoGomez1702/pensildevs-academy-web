@@ -21,12 +21,9 @@ describe('Content shelf', () => {
   });
 
   it('lists available content first, newest first, then what is coming soon', () => {
-    expect(newestFirst([course, comingSoonVideo, video, guide]).map((content) => content.slug)).toEqual([
-      'guide',
-      'video',
-      'course',
-      'soon',
-    ]);
+    expect(
+      newestFirst([course, comingSoonVideo, video, guide]).map((content) => content.slug),
+    ).toEqual(['guide', 'video', 'course', 'soon']);
   });
 
   it('relates available content of the same topic, newest first, without the current one', () => {

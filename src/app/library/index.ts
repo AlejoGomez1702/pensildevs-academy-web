@@ -17,7 +17,11 @@ export type { YouTubeVideoId } from './domain/youtube-video-id';
 export { BrowseLibrary, type LibraryOverview } from './application/browse-library';
 export { ExploreTopic, type TopicShelf } from './application/explore-topic';
 export { OpenContent, type OpenContentError, type OpenedContent } from './application/open-content';
-export { WatchLesson, type LessonInCourse, type WatchLessonError } from './application/watch-lesson';
+export {
+  WatchLesson,
+  type LessonInCourse,
+  type WatchLessonError,
+} from './application/watch-lesson';
 export { provideLibrary } from './library.providers';
 export { ContentCard } from './ui/content-card';
 export { ContentHeading } from './ui/content-heading';

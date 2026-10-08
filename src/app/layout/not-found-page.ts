@@ -14,7 +14,8 @@ import { Icon } from '../shared/ui/icon';
           Esta lección se quedó en <span class="scribble">boceto</span>
         </h1>
         <p class="mx-auto mt-4 max-w-md text-lg text-ink-muted">
-          No encontramos lo que buscas. Puede que el enlace haya cambiado o que la dirección tenga un error.
+          No encontramos lo que buscas. Puede que el enlace haya cambiado o que la dirección tenga
+          un error.
         </p>
         <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
           <a routerLink="/" class="btn-primary">

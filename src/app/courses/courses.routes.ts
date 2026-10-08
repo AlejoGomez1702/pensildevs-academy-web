@@ -4,8 +4,13 @@ import { contentDescription, contentTitle, provideLibrary, WatchLesson } from '.
 import { ROUTE_DESCRIPTION } from '../shared/infrastructure/seo-title-strategy';
 
 const lessonTitle: ResolveFn<string> = async (route) => {
-  const result = await inject(WatchLesson).execute(route.paramMap.get('slug') ?? '', route.paramMap.get('lesson') ?? '');
-  return result.ok ? `${result.value.navigation.lesson.title} · ${result.value.course.title}` : 'Lección no disponible';
+  const result = await inject(WatchLesson).execute(
+    route.paramMap.get('slug') ?? '',
+    route.paramMap.get('lesson') ?? '',
+  );
+  return result.ok
+    ? `${result.value.navigation.lesson.title} · ${result.value.course.title}`
+    : 'Lección no disponible';
 };
 
 export const COURSES_ROUTES: Routes = [

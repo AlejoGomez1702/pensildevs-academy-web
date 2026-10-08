@@ -11,7 +11,9 @@ describe('Learning content', () => {
     });
 
     it('makes a course available once at least one lesson is published', () => {
-      expect(isAvailable(aCourse({ lessons: [aLesson({ video: null }), aLesson({ slug: 'b' })] }))).toBe(true);
+      expect(
+        isAvailable(aCourse({ lessons: [aLesson({ video: null }), aLesson({ slug: 'b' })] })),
+      ).toBe(true);
       expect(isAvailable(aCourse({ lessons: [aLesson({ video: null })] }))).toBe(false);
       expect(isAvailable(aCourse({ lessons: [] }))).toBe(false);
     });

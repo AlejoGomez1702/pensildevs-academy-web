@@ -1,4 +1,9 @@
-import { availableCount, byKind, newestFirst, type ContentKindFilter } from '../domain/content-shelf';
+import {
+  availableCount,
+  byKind,
+  newestFirst,
+  type ContentKindFilter,
+} from '../domain/content-shelf';
 import type { LearningContent } from '../domain/learning-content';
 import type { Library } from './library';
 
@@ -13,7 +18,9 @@ export class ExploreTopic {
   constructor(private readonly library: Library) {}
 
   async execute(topicSlug: string, kind: ContentKindFilter): Promise<TopicShelf> {
-    const topicContent = (await this.library.allContent()).filter((content) => content.topicSlug === topicSlug);
+    const topicContent = (await this.library.allContent()).filter(
+      (content) => content.topicSlug === topicSlug,
+    );
     return {
       contents: newestFirst(byKind(topicContent, kind)),
       availableByKind: {

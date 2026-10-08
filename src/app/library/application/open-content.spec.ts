@@ -9,7 +9,9 @@ describe('Open content', () => {
   const comingSoonCourse = aCourse({ slug: 'inventario', lessons: [aLesson({ video: null })] });
   const otherTopicVideo = aVideo({ slug: 'otro', topicSlug: 'automatizacion' });
 
-  const open = new OpenContent(new InMemoryLibrary([video, guide, comingSoonCourse, otherTopicVideo]));
+  const open = new OpenContent(
+    new InMemoryLibrary([video, guide, comingSoonCourse, otherTopicVideo]),
+  );
 
   it('opens available content with related content of the same topic', async () => {
     const result = await open.execute('video', 'cobrar');
@@ -25,7 +27,10 @@ describe('Open content', () => {
   });
 
   it('reports unknown content', async () => {
-    expect(await open.execute('course', 'nope')).toEqual({ ok: false, error: { reason: 'not-found' } });
+    expect(await open.execute('course', 'nope')).toEqual({
+      ok: false,
+      error: { reason: 'not-found' },
+    });
   });
 
   it('reports content that is coming soon, keeping it to link its topic', async () => {

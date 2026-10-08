@@ -6,9 +6,16 @@ import { WatchLesson } from './watch-lesson';
 describe('Watch lesson', () => {
   const course = aCourse({
     slug: 'primeros-pasos',
-    lessons: [aLesson({ slug: 'uno' }), aLesson({ slug: 'dos', video: null }), aLesson({ slug: 'tres' })],
+    lessons: [
+      aLesson({ slug: 'uno' }),
+      aLesson({ slug: 'dos', video: null }),
+      aLesson({ slug: 'tres' }),
+    ],
   });
-  const comingSoonCourse = aCourse({ slug: 'avanzado', lessons: [aLesson({ slug: 'uno', video: null })] });
+  const comingSoonCourse = aCourse({
+    slug: 'avanzado',
+    lessons: [aLesson({ slug: 'uno', video: null })],
+  });
 
   const watch = new WatchLesson(new InMemoryLibrary([course, comingSoonCourse]));
 
@@ -21,7 +28,10 @@ describe('Watch lesson', () => {
   });
 
   it('reports an unknown course', async () => {
-    expect(await watch.execute('nope', 'uno')).toEqual({ ok: false, error: { reason: 'course-not-found' } });
+    expect(await watch.execute('nope', 'uno')).toEqual({
+      ok: false,
+      error: { reason: 'course-not-found' },
+    });
   });
 
   it('reports a course that is coming soon', async () => {
@@ -34,7 +44,13 @@ describe('Watch lesson', () => {
   it.each([
     ['nope', 'lesson-not-found'],
     ['dos', 'lesson-coming-soon'],
-  ] as const)('reports lesson "%s" as %s, keeping the course to link back', async (lessonSlug, reason) => {
-    expect(await watch.execute('primeros-pasos', lessonSlug)).toEqual({ ok: false, error: { reason, course } });
-  });
+  ] as const)(
+    'reports lesson "%s" as %s, keeping the course to link back',
+    async (lessonSlug, reason) => {
+      expect(await watch.execute('primeros-pasos', lessonSlug)).toEqual({
+        ok: false,
+        error: { reason, course },
+      });
+    },
+  );
 });

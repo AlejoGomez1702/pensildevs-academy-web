@@ -10,14 +10,20 @@ describe('Browse library', () => {
   const guide = aGuide({ slug: 'guide', publishedOn: '2026-10-03', topicSlug: 'automatizacion' });
 
   const browse = () =>
-    new BrowseLibrary(new InMemoryLibrary([featuredVideo, featuredComingSoon, course, guide])).execute();
+    new BrowseLibrary(
+      new InMemoryLibrary([featuredVideo, featuredComingSoon, course, guide]),
+    ).execute();
 
   it('features only available content marked as featured', async () => {
     expect((await browse()).featured.map((content) => content.slug)).toEqual(['featured']);
   });
 
   it('lists the latest available content, newest first', async () => {
-    expect((await browse()).latest.map((content) => content.slug)).toEqual(['course', 'guide', 'featured']);
+    expect((await browse()).latest.map((content) => content.slug)).toEqual([
+      'course',
+      'guide',
+      'featured',
+    ]);
   });
 
   it('keeps the latest list short', async () => {

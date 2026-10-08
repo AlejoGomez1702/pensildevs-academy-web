@@ -23,17 +23,38 @@ describe('Content card', () => {
   });
 
   it.each([
-    [aVideo({ slug: 'cobrar', duration: Duration.ofMinutes(8) }), '/videos/cobrar', 'Video', '8 min'],
-    [aCourse({ slug: 'inicio', lessons: [aLesson({ duration: Duration.ofMinutes(12) })] }), '/cursos/inicio', 'Curso', '12 min'],
-    [aGuide({ slug: 'corte', readingTime: Duration.ofMinutes(4) }), '/guias/corte', 'Guía', '4 min de lectura'],
-  ])('links available content to its page with its kind and length', async (content, path, kind, length) => {
-    await show(content);
+    {
+      content: aVideo({ slug: 'cobrar', duration: Duration.ofMinutes(8) }),
+      path: '/videos/cobrar',
+      kind: 'Video',
+      length: '8 min',
+    },
+    {
+      content: aCourse({
+        slug: 'inicio',
+        lessons: [aLesson({ duration: Duration.ofMinutes(12) })],
+      }),
+      path: '/cursos/inicio',
+      kind: 'Curso',
+      length: '12 min',
+    },
+    {
+      content: aGuide({ slug: 'corte', readingTime: Duration.ofMinutes(4) }),
+      path: '/guias/corte',
+      kind: 'Guía',
+      length: '4 min de lectura',
+    },
+  ])(
+    'links an available $kind to its page with its length',
+    async ({ content, path, kind, length }) => {
+      await show(content);
 
-    expect(card.querySelector(`a[href="${path}"]`)?.textContent?.trim()).toBe(content.title);
-    expect(text()).toContain(kind);
-    expect(text()).toContain(length);
-    expect(text()).not.toContain('Próximamente');
-  });
+      expect(card.querySelector(`a[href="${path}"]`)?.textContent?.trim()).toBe(content.title);
+      expect(text()).toContain(kind);
+      expect(text()).toContain(length);
+      expect(text()).not.toContain('Próximamente');
+    },
+  );
 
   it('counts the lessons of a course', async () => {
     await show(aCourse({ lessons: [aLesson({ slug: 'a' }), aLesson({ slug: 'b', video: null })] }));

@@ -33,7 +33,11 @@ export class SeoTitleStrategy extends TitleStrategy {
 
   private deepestDescription(snapshot: RouterStateSnapshot): string | undefined {
     let description: unknown;
-    for (let route: ActivatedRouteSnapshot | null = snapshot.root; route; route = route.firstChild) {
+    for (
+      let route: ActivatedRouteSnapshot | null = snapshot.root;
+      route;
+      route = route.firstChild
+    ) {
       description = route.data[ROUTE_DESCRIPTION] ?? description;
     }
     return typeof description === 'string' ? description : undefined;

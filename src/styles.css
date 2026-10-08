@@ -176,8 +176,16 @@
   .notebook-grid {
     /* Override --grid-line on dark surfaces (e.g. the green hero). */
     background-image:
-      linear-gradient(to right, var(--grid-line, color-mix(in oklab, var(--line) 70%, transparent)) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--grid-line, color-mix(in oklab, var(--line) 70%, transparent)) 1px, transparent 1px);
+      linear-gradient(
+        to right,
+        var(--grid-line, color-mix(in oklab, var(--line) 70%, transparent)) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        var(--grid-line, color-mix(in oklab, var(--line) 70%, transparent)) 1px,
+        transparent 1px
+      );
     background-size: 28px 28px;
     mask-image: radial-gradient(ellipse at 50% 30%, black 35%, transparent 75%);
   }

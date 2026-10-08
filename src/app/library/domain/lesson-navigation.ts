@@ -13,7 +13,10 @@ export interface LessonNavigation {
 
 export type LessonNavigationError = 'lesson-not-found' | 'lesson-coming-soon';
 
-export function navigateLesson(course: Course, lessonSlug: string): Result<LessonNavigation, LessonNavigationError> {
+export function navigateLesson(
+  course: Course,
+  lessonSlug: string,
+): Result<LessonNavigation, LessonNavigationError> {
   const lessons = course.lessons;
   const index = lessons.findIndex((lesson) => lesson.slug === lessonSlug);
   const lesson = lessons[index];

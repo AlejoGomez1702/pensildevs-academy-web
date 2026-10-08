@@ -19,7 +19,14 @@ const menuOf = (group: TopicGroup, path: string): NavigationMenu => ({
   id: group,
   label: TOPIC_GROUP_LABEL[group],
   path,
-  links: topicsOf(group).map((topic) => ({ label: topic.name, description: topic.summary, path: topicPath(topic) })),
+  links: topicsOf(group).map((topic) => ({
+    label: topic.name,
+    description: topic.summary,
+    path: topicPath(topic),
+  })),
 });
 
-export const NAVIGATION_MENUS: readonly NavigationMenu[] = [menuOf('product', '/productos'), menuOf('service', '/servicios')];
+export const NAVIGATION_MENUS: readonly NavigationMenu[] = [
+  menuOf('product', '/productos'),
+  menuOf('service', '/servicios'),
+];

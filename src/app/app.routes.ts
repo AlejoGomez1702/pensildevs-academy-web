@@ -23,6 +23,15 @@ export const routes: Routes = [
     loadChildren: () => import('./guides/guides.routes').then((m) => m.GUIDES_ROUTES),
   },
   {
+    path: 'documentacion',
+    loadChildren: () =>
+      import('./documentation/documentation.routes').then((m) => m.DOCUMENTATION_ROUTES),
+  },
+  {
+    path: 'ingresar',
+    loadChildren: () => import('./account/account.routes').then((m) => m.ACCOUNT_ROUTES),
+  },
+  {
     path: '**',
     title: 'Página no encontrada',
     loadComponent: () => import('./layout/not-found-page').then((m) => m.NotFoundPage),

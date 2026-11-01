@@ -6,7 +6,7 @@
   <nav
     #mainNavigation
     aria-label="Principal"
-    class="hidden md:block"
+    class="hidden lg:block"
     (focusout)="closeSubmenuWhenFocusLeaves($event)"
   >
     <ul class="flex items-center gap-1">
@@ -60,18 +60,30 @@
           }
         </li>
       }
+      <li>
+        <a
+          [routerLink]="documentationPath"
+          routerLinkActive="bg-paper-sunken text-ink"
+          ariaCurrentWhenActive="page"
+          class="inline-flex items-center rounded-full px-4 py-2 font-medium text-ink-muted transition-colors hover:text-ink"
+          >Documentación</a
+        >
+      </li>
     </ul>
   </nav>
 
-  <a [href]="siteUrl" class="btn-secondary hidden md:inline-flex">
-    Ir a Pensil.Devs
-    <app-icon name="arrow-right" class="size-5" />
-  </a>
+  <div class="hidden items-center gap-3 lg:flex">
+    <app-account-control />
+    <a [href]="siteUrl" class="btn-secondary">
+      Ir a Pensil.Devs
+      <app-icon name="arrow-right" class="size-5" />
+    </a>
+  </div>
 
   <button
     #menuButton
     type="button"
-    class="grid size-12 place-items-center rounded-full border border-line bg-paper-raised md:hidden"
+    class="grid size-12 place-items-center rounded-full border border-line bg-paper-raised lg:hidden"
     aria-controls="mobile-menu"
     [attr.aria-expanded]="menuOpen()"
     (click)="toggleMenu()"
@@ -85,7 +97,7 @@
   <nav
     id="mobile-menu"
     aria-label="Menú móvil"
-    class="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-line bg-paper md:hidden"
+    class="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-line bg-paper lg:hidden"
   >
     <ul class="container-page grid gap-5 py-5">
       @for (menu of menus; track menu.id) {
@@ -112,6 +124,19 @@
           </ul>
         </li>
       }
+      <li>
+        <a
+          [routerLink]="documentationPath"
+          routerLinkActive="bg-paper-sunken"
+          ariaCurrentWhenActive="page"
+          class="flex min-h-12 items-center rounded-xl px-4 text-lg font-semibold"
+          (click)="closeMenu()"
+          >Documentación</a
+        >
+      </li>
+      <li class="grid">
+        <app-account-control layout="stacked" (navigated)="closeMenu()" />
+      </li>
       <li class="grid">
         <a [href]="siteUrl" class="btn-secondary">
           Ir a Pensil.Devs

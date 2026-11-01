@@ -24,10 +24,10 @@ describe('Lesson page', () => {
   });
 
   it('plays the lesson and says where it sits in the course', async () => {
-    await visit(COURSE, 'conoce-pensil-pos');
+    await visit(COURSE, 'conoce-pensil-pos-en-2-minutos');
 
-    expect(page.querySelector('h1')?.textContent?.trim()).toBe('Conoce Pensil.Pos');
-    expect(text()).toContain('Lección 1 de 5');
+    expect(page.querySelector('h1')?.textContent?.trim()).toBe('Conoce Pensil.Pos en 2 minutos');
+    expect(text()).toContain('Lección 1 de 7');
     expect(page.querySelector('app-video-player')).not.toBeNull();
     expect(page.querySelector(`a[href="/cursos/${COURSE}"]`)?.textContent).toContain(
       'Primeros pasos con Pensil.Pos',
@@ -35,23 +35,26 @@ describe('Lesson page', () => {
   });
 
   it('lists every lesson, marking the current one and leaving the ones coming soon unlinked', async () => {
-    await visit(COURSE, 'conoce-pensil-pos');
+    await visit(COURSE, 'conoce-pensil-pos-en-2-minutos');
 
     const items = lessonList()?.querySelectorAll('li') ?? [];
-    expect(items).toHaveLength(5);
+    expect(items).toHaveLength(7);
     expect(lessonList()?.querySelector('a[aria-current="page"]')?.getAttribute('href')).toBe(
-      `/cursos/${COURSE}/conoce-pensil-pos`,
+      `/cursos/${COURSE}/conoce-pensil-pos-en-2-minutos`,
     );
-    expect(items[1]?.querySelector('a')).toBeNull();
-    expect(items[1]?.textContent).toContain('Próximamente');
+    expect(items[2]?.querySelector('a')).toBeNull();
+    expect(items[2]?.textContent).toContain('Próximamente');
   });
 
   it('has no previous lesson on the first one and returns to the course after the last published one', async () => {
-    await visit(COURSE, 'conoce-pensil-pos');
+    await visit(COURSE, 'conoce-pensil-pos-en-2-minutos');
+    const pager = () =>
+      page.querySelector<HTMLElement>('nav[aria-label="Navegación entre lecciones"]');
+    expect(pager()?.textContent).not.toContain('Anterior');
 
-    const pager = page.querySelector<HTMLElement>('nav[aria-label="Navegación entre lecciones"]');
-    expect(pager?.textContent).not.toContain('Anterior');
-    expect(pager?.querySelector(`a[href="/cursos/${COURSE}"]`)?.textContent).toContain(
+    await visit(COURSE, 'recorrido-por-pensil-pos');
+    expect(pager()?.textContent).toContain('Anterior');
+    expect(pager()?.querySelector(`a[href="/cursos/${COURSE}"]`)?.textContent).toContain(
       'Volver al curso',
     );
   });

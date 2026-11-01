@@ -1,9 +1,10 @@
 import { Duration } from '../../shared/kernel/duration';
 import { err, ok, type Result } from '../../shared/kernel/result';
 import { Library } from '../application/library';
-import type { LearningContent, Lesson } from '../domain/learning-content';
+import { HostedVideo } from '../domain/hosted-video';
+import type { LearningContent, Lesson, VideoSource } from '../domain/learning-content';
 import { YouTubeVideoId } from '../domain/youtube-video-id';
-import type { RawContent, RawLesson } from './raw-content';
+import type { RawContent, RawHostedVideo, RawLesson } from './raw-content';
 
 type Conversion<T> = Result<T, string>;
 
@@ -40,7 +41,7 @@ function toLearningContent(raw: RawContent): Conversion<LearningContent> {
   };
   switch (raw.kind) {
     case 'video': {
-      const video = toVideoId(raw.youtubeUrl);
+      const video = toVideoSource(raw);
       return video.ok
         ? ok({
             ...base,
@@ -65,7 +66,7 @@ function toLearningContent(raw: RawContent): Conversion<LearningContent> {
 }
 
 function toLesson(raw: RawLesson): Conversion<Lesson> {
-  const video = toVideoId(raw.youtubeUrl);
+  const video = toVideoSource(raw);
   return video.ok
     ? ok({
         slug: raw.slug,
@@ -74,6 +75,20 @@ function toLesson(raw: RawLesson): Conversion<Lesson> {
         duration: Duration.ofSeconds(raw.durationSeconds),
       })
     : err(`lesson "${raw.slug}": ${video.error}`);
+}
+
+function toVideoSource(raw: {
+  readonly youtubeUrl?: string;
+  readonly hostedVideo?: RawHostedVideo;
+}): Conversion<VideoSource | null> {
+  if (raw.youtubeUrl !== undefined && raw.hostedVideo !== undefined) {
+    return err('a video is either on YouTube or hosted, not both');
+  }
+  if (raw.hostedVideo) {
+    const hosted = HostedVideo.create(raw.hostedVideo);
+    return hosted.ok ? hosted : err(`"${raw.hostedVideo.file}" is not a valid hosted video`);
+  }
+  return toVideoId(raw.youtubeUrl);
 }
 
 function toVideoId(youtubeUrl: string | undefined): Conversion<YouTubeVideoId | null> {

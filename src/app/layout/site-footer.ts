@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DOCUMENTATION_PATH } from '../documentation';
 import { Logo } from '../shared/ui/logo';
 import { PENSIL_DEVS_URL } from '../topics';
 import { NAVIGATION_MENUS } from './navigation-links';
@@ -22,7 +23,8 @@ import { NAVIGATION_MENUS } from './navigation-links';
           <app-logo class="[&_.text-pencil-text]:text-pencil" />
         </a>
         <p class="mt-4 max-w-sm text-on-graphite/75">
-          Cursos, videos y guías para sacarle provecho a los productos y servicios de Pensil.Devs.
+          Cursos, videos, guías y la documentación completa de los productos y servicios de
+          Pensil.Devs.
         </p>
       </div>
 
@@ -49,6 +51,11 @@ import { NAVIGATION_MENUS } from './navigation-links';
         </h2>
         <ul class="mt-4 grid gap-2">
           <li>
+            <a [routerLink]="documentationPath" class="text-on-graphite/80 hover:text-on-graphite"
+              >Documentación</a
+            >
+          </li>
+          <li>
             <a [href]="siteUrl" class="text-on-graphite/80 hover:text-on-graphite">Sitio web</a>
           </li>
           <li>
@@ -69,5 +76,6 @@ import { NAVIGATION_MENUS } from './navigation-links';
 export class SiteFooter {
   protected readonly menus = NAVIGATION_MENUS;
   protected readonly siteUrl = PENSIL_DEVS_URL;
+  protected readonly documentationPath = DOCUMENTATION_PATH;
   protected readonly year = new Date().getFullYear();
 }

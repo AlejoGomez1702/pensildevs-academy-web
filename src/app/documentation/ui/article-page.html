@@ -1,0 +1,158 @@
+@if (state(); as state) {
+  @if (state.ok) {
+    @let reading = state.value;
+    @let article = reading.article;
+    @let info = trackInfo[article.track];
+    @let other = otherTrackOf(article.track);
+    <article aria-labelledby="article-title">
+      <header class="relative overflow-hidden">
+        <div class="notebook-grid absolute inset-0 -z-10" aria-hidden="true"></div>
+        <div class="container-page py-12 sm:py-16">
+          <nav aria-label="Ruta de navegación">
+            <ol
+              class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-ink-muted"
+            >
+              <li><a [routerLink]="documentationPath" class="hover:text-ink">Documentación</a></li>
+              <li aria-hidden="true">/</li>
+              <li>
+                <a [routerLink]="productPath()" class="hover:text-ink">{{ productName() }}</a>
+              </li>
+              <li aria-hidden="true">/</li>
+              <li>{{ info.short }}</li>
+            </ol>
+          </nav>
+          <p class="eyebrow mt-6 flex items-center gap-2">
+            <app-icon [name]="info.icon" class="size-5" />
+            {{ info.label }} · {{ reading.position }} de {{ reading.total }}
+          </p>
+          <h1 id="article-title" class="mt-2 text-4xl font-extrabold sm:text-5xl">
+            {{ article.title }}
+          </h1>
+          <p class="mt-5 max-w-2xl text-lg text-ink-muted">{{ article.summary }}</p>
+          <p class="mt-4 flex flex-wrap gap-x-5 gap-y-1 font-medium text-ink-muted">
+            <span class="inline-flex items-center gap-1.5">
+              <app-icon name="clock" class="size-5" />
+              {{ article.readingTime.format() }} de lectura
+            </span>
+            <span>Revisado el {{ reviewedOn(article) }}</span>
+          </p>
+        </div>
+      </header>
+
+      <div class="container-page grid gap-12 pb-16 sm:pb-24 lg:grid-cols-[17rem_minmax(0,1fr)]">
+        <aside
+          class="order-last grid content-start gap-8 lg:order-0 lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:overflow-y-auto"
+        >
+          <nav aria-labelledby="article-index-title">
+            <h2 id="article-index-title" class="font-sans text-base font-semibold text-leaf-text">
+              En este artículo
+            </h2>
+            <ol class="mt-2 grid gap-1">
+              @for (section of article.sections; track section.id) {
+                <li>
+                  <a
+                    [href]="'#' + section.id"
+                    class="flex min-h-11 items-center rounded-xl px-3 font-medium text-ink-muted hover:bg-paper-sunken hover:text-ink"
+                    >{{ section.title }}</a
+                  >
+                </li>
+              }
+            </ol>
+          </nav>
+
+          <nav aria-labelledby="track-articles-title">
+            <h2 id="track-articles-title" class="font-sans text-base font-semibold text-leaf-text">
+              {{ info.label }}
+            </h2>
+            <ol class="mt-2 grid gap-1">
+              @for (item of reading.track; track item.slug) {
+                @let current = item.slug === article.slug;
+                <li>
+                  <a
+                    [routerLink]="pathOf(item)"
+                    class="flex min-h-11 items-center rounded-xl px-3 font-medium"
+                    [class]="
+                      current
+                        ? 'bg-paper-sunken text-ink'
+                        : 'text-ink-muted hover:bg-paper-sunken hover:text-ink'
+                    "
+                    [attr.aria-current]="current ? 'page' : null"
+                    >{{ item.title }}</a
+                  >
+                </li>
+              }
+            </ol>
+            <a
+              [routerLink]="productPath()"
+              class="mt-4 inline-flex min-h-11 items-center gap-2 text-link"
+            >
+              <app-icon [name]="trackInfo[other].icon" class="size-5" />
+              Ir a la {{ trackInfo[other].label.toLowerCase() }}
+            </a>
+          </nav>
+        </aside>
+
+        <div class="grid max-w-3xl content-start gap-14">
+          @for (section of article.sections; track section.id) {
+            <section
+              [id]="section.id"
+              [attr.aria-labelledby]="section.id + '-title'"
+              class="grid scroll-mt-24 gap-5"
+            >
+              <h2 [id]="section.id + '-title'" class="text-2xl font-bold sm:text-3xl">
+                {{ section.title }}
+              </h2>
+              <app-doc-blocks [blocks]="section.blocks" />
+            </section>
+          }
+
+          <nav
+            aria-label="Más artículos"
+            class="grid gap-4 border-t border-line pt-8 sm:grid-cols-2"
+          >
+            @if (reading.previous; as previous) {
+              <a [routerLink]="pathOf(previous)" class="card grid gap-1 p-5 hover:border-ink">
+                <span class="inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted">
+                  <app-icon name="arrow-left" class="size-4" /> Anterior
+                </span>
+                <span class="font-semibold">{{ previous.title }}</span>
+              </a>
+            } @else {
+              <span aria-hidden="true"></span>
+            }
+            @if (reading.next; as next) {
+              <a
+                [routerLink]="pathOf(next)"
+                class="card grid gap-1 p-5 text-right hover:border-ink"
+              >
+                <span
+                  class="inline-flex items-center justify-end gap-1.5 text-sm font-medium text-ink-muted"
+                >
+                  Siguiente <app-icon name="arrow-right" class="size-4" />
+                </span>
+                <span class="font-semibold">{{ next.title }}</span>
+              </a>
+            } @else {
+              <a
+                [routerLink]="productPath()"
+                class="card grid gap-1 p-5 text-right hover:border-ink"
+              >
+                <span class="text-sm font-medium text-ink-muted"
+                  >Terminaste esta documentación</span
+                >
+                <span class="font-semibold">Volver a la documentación de {{ productName() }}</span>
+              </a>
+            }
+          </nav>
+        </div>
+      </div>
+    </article>
+  } @else {
+    <app-content-notice
+      title="No encontramos ese artículo"
+      message="Puede que el enlace haya cambiado. Búscalo en la documentación del producto."
+      linkLabel="Ir a la documentación"
+      [linkPath]="documentationPath"
+    />
+  }
+}

@@ -1,5 +1,9 @@
 import { Duration } from '../../shared/kernel/duration';
+import type { HostedVideo } from './hosted-video';
 import type { YouTubeVideoId } from './youtube-video-id';
+
+/** Where a video plays: YouTube, or the academy itself (docs/adr/0004). */
+export type VideoSource = YouTubeVideoId | HostedVideo;
 
 export type ContentKind = 'video' | 'course' | 'guide';
 
@@ -17,7 +21,7 @@ interface ContentBase {
 export interface Video extends ContentBase {
   readonly kind: 'video';
   /** `null` while the video is coming soon. */
-  readonly video: YouTubeVideoId | null;
+  readonly video: VideoSource | null;
   readonly duration: Duration;
 }
 
@@ -25,7 +29,7 @@ export interface Lesson {
   readonly slug: string;
   readonly title: string;
   /** `null` while the lesson is coming soon. */
-  readonly video: YouTubeVideoId | null;
+  readonly video: VideoSource | null;
   readonly duration: Duration;
 }
 

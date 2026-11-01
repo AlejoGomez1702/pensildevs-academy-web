@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { TestBed, type ComponentFixture } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
+import { Membership } from '../account';
 import { SiteHeader } from './site-header';
 
 @Component({ template: '' })
@@ -34,7 +35,10 @@ describe('Site header', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      providers: [provideRouter([{ path: '**', component: BlankPage }])],
+      providers: [
+        provideRouter([{ path: '**', component: BlankPage }]),
+        { provide: Membership, useValue: { member: signal(null) } },
+      ],
     });
     fixture = TestBed.createComponent(SiteHeader);
     header = fixture.nativeElement;

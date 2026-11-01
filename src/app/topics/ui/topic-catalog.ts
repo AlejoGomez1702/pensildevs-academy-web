@@ -18,7 +18,7 @@ export const TOPICS: readonly CatalogTopic[] = [
     group: 'product',
     icon: 'receipt',
     summary:
-      'Aprende a vender, controlar tu inventario y cerrar la caja con el punto de venta de Pensil.Devs.',
+      'Aprende a vender, controlar tu inventario y llevar la caja con el punto de venta de Pensil.Devs.',
   },
   {
     slug: 'tiendas-en-linea',
@@ -74,6 +74,15 @@ export function topicPath(topic: Topic): string {
 /** The same product or service on pensildevs.com. */
 export function topicSiteUrl(topic: Topic): string {
   return `${PENSIL_DEVS_URL}${topicPath(topic)}`;
+}
+
+/**
+ * Every product has its functional and technical documentation, mounted by the documentation
+ * module at `/documentacion/<slug>` (app.integration.spec.ts checks each one opens). Services
+ * have none yet.
+ */
+export function topicDocumentationPath(topic: Topic): string | null {
+  return topic.group === 'product' ? `/documentacion/${topic.slug}` : null;
 }
 
 export interface TopicLink {

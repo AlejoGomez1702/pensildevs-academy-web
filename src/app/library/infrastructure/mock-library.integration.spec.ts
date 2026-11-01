@@ -1,4 +1,6 @@
+import { HostedVideo } from '../domain/hosted-video';
 import { isAvailable, type Course, type Video } from '../domain/learning-content';
+import { YouTubeVideoId } from '../domain/youtube-video-id';
 import { MOCK_CONTENT } from './mock-content';
 import { MockLibrary } from './mock-library';
 import type { RawContent } from './raw-content';
@@ -10,20 +12,49 @@ describe('Mock library (real test data)', () => {
     expect(shelf).toHaveLength(MOCK_CONTENT.length);
   });
 
-  it('publishes the first Pensil.Pos video, as a video and as the first lesson of the starter course', async () => {
+  it('opens the Pensil.Pos starter course with the hosted introduction, then the first YouTube video', async () => {
     const shelf = await new MockLibrary(MOCK_CONTENT).allContent();
 
-    const video = shelf.find(
+    const introduction = shelf.find(
       (content): content is Video =>
-        content.kind === 'video' && content.topicSlug === 'pensil-pos' && isAvailable(content),
+        content.kind === 'video' && content.slug === 'introduccion-a-pensil-pos',
     );
-    expect(video?.video?.value).toBe('oFdO0jTK0n8');
+    expect(introduction?.video).toBeInstanceOf(HostedVideo);
+    expect(introduction?.featured).toBe(true);
 
     const course = shelf.find(
       (content): content is Course =>
         content.kind === 'course' && content.topicSlug === 'pensil-pos',
     );
-    expect(course?.lessons[0]?.video?.value).toBe('oFdO0jTK0n8');
+    expect(course?.lessons[0]?.video).toBeInstanceOf(HostedVideo);
+    const firstYouTube = course?.lessons[1]?.video;
+    expect(firstYouTube instanceof YouTubeVideoId && firstYouTube.value).toBe('oFdO0jTK0n8');
+  });
+
+  it('drops a video that is both on YouTube and hosted, or hosted outside the academy', async () => {
+    const report = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const base = {
+      kind: 'video',
+      title: 'Video',
+      summary: 'A video.',
+      topic: 'pensil-pos',
+      publishedOn: '2026-10-08',
+      durationSeconds: 60,
+    } as const;
+    const hostedVideo = {
+      file: '/media/a.mp4',
+      captions: '/media/a.vtt',
+      poster: '/media/a.jpg',
+      transcript: ['Hola.'],
+    };
+    const raw: RawContent[] = [
+      { ...base, slug: 'both', hostedVideo, youtubeUrl: 'oFdO0jTK0n8' },
+      { ...base, slug: 'elsewhere', hostedVideo: { ...hostedVideo, file: 'https://x.com/a.mp4' } },
+    ];
+
+    expect(await new MockLibrary(raw).allContent()).toEqual([]);
+    expect(report).toHaveBeenCalledWith(expect.stringContaining('both'));
+    expect(report).toHaveBeenCalledWith(expect.stringContaining('elsewhere'));
   });
 
   it('keeps content without a video as coming soon', async () => {

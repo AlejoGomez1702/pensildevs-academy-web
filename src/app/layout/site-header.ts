@@ -2,6 +2,8 @@ import { Component, computed, ElementRef, inject, signal, viewChild } from '@ang
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter, map } from 'rxjs';
+import { AccountControl } from '../account';
+import { DOCUMENTATION_PATH } from '../documentation';
 import { Icon } from '../shared/ui/icon';
 import { Logo } from '../shared/ui/logo';
 import { PENSIL_DEVS_URL } from '../topics';
@@ -12,7 +14,7 @@ const isWithinSection = (url: string, sectionPath: string) =>
 
 @Component({
   selector: 'app-site-header',
-  imports: [Icon, Logo, RouterLink, RouterLinkActive],
+  imports: [AccountControl, Icon, Logo, RouterLink, RouterLinkActive],
   templateUrl: './site-header.html',
   host: {
     class: 'sticky top-0 z-40 block border-b border-line/70 bg-paper/85 backdrop-blur-md',
@@ -37,6 +39,7 @@ export class SiteHeader {
 
   protected readonly menus = NAVIGATION_MENUS;
   protected readonly siteUrl = PENSIL_DEVS_URL;
+  protected readonly documentationPath = DOCUMENTATION_PATH;
   protected readonly menuOpen = signal(false);
   protected readonly openSubmenu = signal<string | null>(null);
   protected readonly activeSection = computed(

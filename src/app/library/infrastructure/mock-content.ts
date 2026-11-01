@@ -2,17 +2,49 @@ import type { RawContent } from './raw-content';
 
 const PENSIL_POS_FIRST_VIDEO = 'https://www.youtube.com/watch?v=oFdO0jTK0n8';
 
+/** Rendered from the real Pensil.Pos screens; captions and transcript repeat what it shows. */
+const PENSIL_POS_INTRODUCTION = {
+  file: '/media/pensil-pos/introduccion.mp4',
+  captions: '/media/pensil-pos/introduccion.es.vtt',
+  poster: '/media/pensil-pos/introduccion.jpg',
+  transcript: [
+    'Bienvenido a Pensil.Pos, el punto de venta que le soluciona la vida a tu negocio.',
+    'Ventas, mesas, domicilios, inventario, compras, caja, clientes y empleados: todo en un solo lugar, en el navegador y en la app Android, y todos los equipos ven lo mismo en vivo.',
+    'En Venta Rápida cobras en segundos: en efectivo, Nequi, Daviplata, Davivienda o Bancolombia. Pensil.Pos te dice la devuelta, te deja dividir la cuenta o venderle a crédito a tu cliente.',
+    'Si tu negocio tiene mesas, cada una lleva su propia cuenta y los meseros agregan productos desde cualquier equipo. En las mesas de billar, el tiempo se cobra por minuto.',
+    'Los domicilios llevan el cliente, la dirección y el costo de envío. Sigue cada pedido de pendiente a en camino, asigna el domiciliario y cóbralo al entregar.',
+    'Cada venta descuenta las existencias y cada compra a tus proveedores las suma. Pensil.Pos calcula tu utilidad con el costo real de lo que vendiste.',
+    'Para fruver y negocios que venden por kilo, conecta tu báscula: el peso llega directo a la venta, o lo puedes escribir a mano.',
+    'Lleva la caja, la cartera de tus clientes y tus reportes de ventas. Crea un usuario para cada empleado y decide qué puede hacer.',
+    'Empezar es fácil: crea tu cuenta en pensilpos.com, registra tu negocio, carga tus productos y haz tu primera venta.',
+    'Aprende más en Pensil.Devs Academy: cursos, videos y la documentación funcional y técnica de Pensil.Pos.',
+  ],
+} as const;
+
 /**
- * PROVISIONAL test content. The only real piece is the first Pensil.Pos video (its title, summary
- * and duration are still to be confirmed by Pensil.Devs). Everything without `youtubeUrl` is shown
- * as coming soon; guides carry sample text so the guide page can be reviewed.
+ * PROVISIONAL test content. Real pieces: the introduction to Pensil.Pos (hosted by the academy) and
+ * the first Pensil.Pos video on YouTube (its title, summary and duration are still to be confirmed by
+ * Pensil.Devs). Pensil.Pos content was checked against the product on 2026-11-01. Everything
+ * without a video is shown as coming soon; guides of the services carry sample text.
  */
 export const MOCK_CONTENT: readonly RawContent[] = [
   // Pensil.Pos
   {
     kind: 'video',
+    slug: 'introduccion-a-pensil-pos',
+    title: 'Conoce Pensil.Pos en 2 minutos',
+    summary:
+      'Qué hace Pensil.Pos de punta a punta: ventas, mesas, domicilios, inventario, venta por peso y cómo empezar hoy.',
+    topic: 'pensil-pos',
+    publishedOn: '2026-11-01',
+    featured: true,
+    hostedVideo: PENSIL_POS_INTRODUCTION,
+    durationSeconds: 112,
+  },
+  {
+    kind: 'video',
     slug: 'conoce-pensil-pos',
-    title: 'Conoce Pensil.Pos',
+    title: 'Recorrido por Pensil.Pos',
     summary:
       'Un recorrido por Pensil.Pos: cómo se ve, qué puedes hacer desde el mostrador y por dónde empezar.',
     topic: 'pensil-pos',
@@ -26,59 +58,72 @@ export const MOCK_CONTENT: readonly RawContent[] = [
     slug: 'primeros-pasos-con-pensil-pos',
     title: 'Primeros pasos con Pensil.Pos',
     summary:
-      'De cero a tu primera venta: conoce el sistema, carga tu catálogo, cobra y cierra la caja del día.',
+      'De cero a tu primera venta: conoce el sistema, carga tu catálogo, cobra y cuadra la caja del día.',
     topic: 'pensil-pos',
-    publishedOn: '2026-10-08',
+    publishedOn: '2026-11-01',
     featured: true,
     lessons: [
       {
-        slug: 'conoce-pensil-pos',
-        title: 'Conoce Pensil.Pos',
+        slug: 'conoce-pensil-pos-en-2-minutos',
+        title: 'Conoce Pensil.Pos en 2 minutos',
+        hostedVideo: PENSIL_POS_INTRODUCTION,
+        durationSeconds: 112,
+      },
+      {
+        slug: 'recorrido-por-pensil-pos',
+        title: 'Recorrido por Pensil.Pos',
         youtubeUrl: PENSIL_POS_FIRST_VIDEO,
         durationSeconds: 300,
       },
+      {
+        slug: 'registra-tu-negocio',
+        title: 'Crea tu cuenta y registra tu negocio',
+        durationSeconds: 240,
+      },
       { slug: 'carga-tu-catalogo', title: 'Carga tu catálogo de productos', durationSeconds: 420 },
-      { slug: 'tu-primera-venta', title: 'Tu primera venta', durationSeconds: 360 },
-      { slug: 'abre-y-cierra-la-caja', title: 'Abre y cierra la caja', durationSeconds: 300 },
-      { slug: 'reportes-del-dia', title: 'Los reportes del día', durationSeconds: 240 },
+      { slug: 'tu-primera-venta', title: 'Tu primera venta en Venta Rápida', durationSeconds: 360 },
+      { slug: 'cuadra-la-caja', title: 'Cuadra la caja del día', durationSeconds: 300 },
+      { slug: 'reportes-del-dia', title: 'Los reportes de ventas', durationSeconds: 240 },
     ],
   },
   {
     kind: 'guide',
-    slug: 'corte-de-caja',
-    title: 'Cómo hacer el corte de caja',
+    slug: 'cuadra-la-caja-del-dia',
+    title: 'Cómo cuadrar la caja del día',
     summary:
-      'Cierra el turno sabiendo exactamente cuánto entró, por forma de pago, y qué hacer si no cuadra.',
+      'Compara lo que vendiste en efectivo y lo que entró y salió de la caja con el dinero del cajón.',
     topic: 'pensil-pos',
-    publishedOn: '2026-10-07',
-    readingMinutes: 4,
+    publishedOn: '2026-11-01',
+    readingMinutes: 3,
     sections: [
       {
         id: 'antes-de-empezar',
         title: 'Antes de empezar',
-        intro: 'Haz el corte al final de cada turno, con el cajón frente a ti.',
+        intro:
+          'Pensil.Pos no abre ni cierra turnos: el día se cuadra con el resumen de ventas y los movimientos de caja. Los movimientos de caja solo los ve el dueño del negocio.',
         steps: [
-          'Termina o cancela las ventas que hayan quedado abiertas.',
-          'Ten a la mano los comprobantes de pagos con tarjeta y transferencia.',
+          'Termina o vacía las cuentas que hayan quedado abiertas en Venta Rápida, Mesas y Domicilios.',
+          'Ten a la mano los comprobantes de Nequi, Daviplata y transferencias del día.',
         ],
       },
       {
-        id: 'hacer-el-corte',
-        title: 'Hacer el corte',
+        id: 'cuadrar',
+        title: 'Cuadrar',
         steps: [
-          'Entra a Caja y elige Cerrar turno.',
-          'Cuenta el efectivo del cajón y escribe el total.',
-          'Revisa el resumen por forma de pago y confirma el cierre.',
+          'Entra a Ventas, elige el día de hoy y revisa en Resumen cuánto se vendió por cada medio de pago.',
+          'Entra a Caja y suma los ingresos y egresos de dinero que registraste hoy.',
+          'El efectivo esperado es: ventas en efectivo + ingresos − egresos. Compáralo con el dinero del cajón.',
+          'Compara los otros medios de pago con los comprobantes de cada uno.',
         ],
       },
       {
         id: 'si-no-cuadra',
-        title: 'Si el corte no cuadra',
+        title: 'Si no cuadra',
         intro: 'Una diferencia casi siempre tiene una explicación sencilla.',
         steps: [
-          'Busca ventas cobradas con una forma de pago distinta a la real.',
-          'Revisa si hubo retiros o devoluciones sin registrar.',
-          'Anota la diferencia en el comentario del cierre para revisarla después.',
+          'Busca ventas cobradas con un medio de pago distinto al real.',
+          'Revisa si hubo salidas o entradas de dinero sin registrar en Caja.',
+          'Si tu negocio trabaja de noche, recuerda que el día va de 6:00 a. m. a 6:00 a. m. del día siguiente.',
         ],
       },
     ],
@@ -87,7 +132,8 @@ export const MOCK_CONTENT: readonly RawContent[] = [
     kind: 'video',
     slug: 'vende-con-lector-de-codigos',
     title: 'Vende más rápido con el lector de códigos',
-    summary: 'Configura tu lector y cobra escaneando, sin buscar productos a mano.',
+    summary:
+      'Ponle código a tus productos y búscalos escaneando en Venta Rápida, sin escribir su nombre.',
     topic: 'pensil-pos',
     publishedOn: '2026-10-15',
     durationSeconds: 240,

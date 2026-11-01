@@ -13,18 +13,28 @@ interface RawContentBase {
   readonly featured?: boolean;
 }
 
+/** A video served by the academy itself, from `public/media/`. */
+export interface RawHostedVideo {
+  readonly file: string;
+  readonly captions: string;
+  readonly poster: string;
+  readonly transcript: readonly string[];
+}
+
 export interface RawVideo extends RawContentBase {
   readonly kind: 'video';
-  /** Missing while the video is coming soon. */
+  /** Missing while the video is coming soon, or when it is hosted. */
   readonly youtubeUrl?: string;
+  readonly hostedVideo?: RawHostedVideo;
   readonly durationSeconds: number;
 }
 
 export interface RawLesson {
   readonly slug: string;
   readonly title: string;
-  /** Missing while the lesson is coming soon. */
+  /** Missing while the lesson is coming soon, or when it is hosted. */
   readonly youtubeUrl?: string;
+  readonly hostedVideo?: RawHostedVideo;
   readonly durationSeconds: number;
 }
 

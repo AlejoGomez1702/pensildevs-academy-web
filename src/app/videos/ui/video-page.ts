@@ -30,8 +30,8 @@ import { topicLink } from '../../topics';
               <app-icon name="clock" class="size-5" />
               {{ video.duration.format() }}
             </p>
-            @if (video.video; as youtube) {
-              <app-video-player class="mt-8" [video]="youtube" [title]="video.title" />
+            @if (video.video; as source) {
+              <app-video-player class="mt-8" [video]="source" [title]="video.title" />
             }
             <h2 class="mt-8 text-2xl font-bold">De qué trata</h2>
             <p class="mt-3 max-w-2xl text-lg text-ink-muted">{{ video.summary }}</p>

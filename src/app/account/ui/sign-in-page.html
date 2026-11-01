@@ -1,0 +1,116 @@
+<section aria-labelledby="sign-in-title" class="relative overflow-hidden">
+  <div class="notebook-grid absolute inset-0 -z-10" aria-hidden="true"></div>
+  <div class="container-page grid gap-12 py-14 sm:py-20 lg:grid-cols-2 lg:items-center">
+    <div>
+      <p class="eyebrow">Documentación de Pensil.Pos</p>
+      <h1 id="sign-in-title" class="mt-2 text-4xl font-extrabold sm:text-5xl">
+        Ingresa con tu cuenta de Pensil.Pos
+      </h1>
+      <p class="mt-5 max-w-xl text-lg text-ink-muted">
+        Usa el mismo usuario o correo y la misma contraseña con los que entras a
+        <a [href]="links.web" class="text-link">pensilpos.com</a>. No tienes que crear otra cuenta.
+      </p>
+      <ul class="mt-8 grid gap-3 text-ink-muted">
+        <li class="flex gap-3">
+          <app-icon name="book" class="mt-0.5 size-6 text-leaf-text" />
+          Manual funcional: cómo vender, controlar el inventario y administrar tu negocio.
+        </li>
+        <li class="flex gap-3">
+          <app-icon name="gear" class="mt-0.5 size-6 text-leaf-text" />
+          Documentación técnica: equipos, impresión de tickets, báscula, seguridad y soporte.
+        </li>
+        <li class="flex gap-3">
+          <app-icon name="lock" class="mt-0.5 size-6 text-leaf-text" />
+          El academy nunca guarda tu contraseña.
+        </li>
+      </ul>
+    </div>
+
+    <form class="card grid gap-6 p-6 sm:p-10" novalidate (submit)="signIn($event)">
+      @let identifier = signInForm.identifier();
+      @let password = signInForm.password();
+      @let identifierInvalid = identifier.touched() && identifier.invalid();
+      @let passwordInvalid = password.touched() && password.invalid();
+
+      @if (failure(); as failure) {
+        <div role="alert" class="flex gap-3 rounded-xl border border-danger/40 bg-danger/5 p-4">
+          <app-icon name="alert" class="mt-0.5 size-5 text-danger" />
+          <div class="grid gap-1">
+            <p class="font-semibold">{{ failure }}</p>
+            @if (credentialsRejected()) {
+              <p class="text-sm text-ink-muted">
+                ¿Te registraste con Google? Crea una contraseña desde
+                <a [href]="links.forgotPassword" class="text-link">¿Olvidaste tu contraseña?</a>
+                en pensilpos.com.
+              </p>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="grid gap-2">
+        <label for="sign-in-identifier" class="font-semibold">Usuario o correo</label>
+        <input
+          id="sign-in-identifier"
+          class="form-control"
+          type="text"
+          autocomplete="username"
+          autocapitalize="none"
+          spellcheck="false"
+          enterkeyhint="next"
+          [formField]="signInForm.identifier"
+          [attr.aria-invalid]="identifierInvalid"
+          [attr.aria-describedby]="identifierInvalid ? 'sign-in-identifier-error' : null"
+        />
+        @if (identifierInvalid) {
+          <p id="sign-in-identifier-error" class="form-error">
+            <app-icon name="alert" class="size-4" />{{ identifier.errors()[0]?.message }}
+          </p>
+        }
+      </div>
+
+      <div class="grid gap-2">
+        <div class="flex items-center justify-between gap-4">
+          <label for="sign-in-password" class="font-semibold">Contraseña</label>
+          <a [href]="links.forgotPassword" class="text-sm text-link">¿Olvidaste tu contraseña?</a>
+        </div>
+        <div class="relative">
+          <input
+            id="sign-in-password"
+            class="form-control pr-14"
+            [type]="showPassword() ? 'text' : 'password'"
+            autocomplete="current-password"
+            enterkeyhint="go"
+            [formField]="signInForm.password"
+            [attr.aria-invalid]="passwordInvalid"
+            [attr.aria-describedby]="passwordInvalid ? 'sign-in-password-error' : null"
+          />
+          <button
+            type="button"
+            class="absolute inset-y-0 right-0 grid w-12 place-items-center rounded-r-xl text-ink-muted hover:text-ink"
+            [attr.aria-pressed]="showPassword()"
+            (click)="togglePassword()"
+          >
+            <app-icon [name]="showPassword() ? 'eye-off' : 'eye'" class="size-5" />
+            <span class="sr-only">Mostrar contraseña</span>
+          </button>
+        </div>
+        @if (passwordInvalid) {
+          <p id="sign-in-password-error" class="form-error">
+            <app-icon name="alert" class="size-4" />{{ password.errors()[0]?.message }}
+          </p>
+        }
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="submitting()">
+        {{ submitting() ? 'Ingresando…' : 'Ingresar' }}
+        <app-icon name="arrow-right" class="size-5" />
+      </button>
+
+      <p class="text-center text-ink-muted">
+        ¿Aún no usas Pensil.Pos?
+        <a [href]="links.register" class="text-link">Crear cuenta</a>
+      </p>
+    </form>
+  </div>
+</section>

@@ -31,14 +31,14 @@ describe('Topic page', () => {
     await visit('product', 'pensil-pos');
 
     expect(page.querySelector('h1')?.textContent?.trim()).toBe('Pensil.Pos');
-    expect(cards()).toHaveLength(4);
+    expect(cards()).toHaveLength(5);
     expect(text()).toContain('Próximamente');
   });
 
   it('labels each filter with the available content of that kind and marks the chosen one', async () => {
     await visit('product', 'pensil-pos');
 
-    expect(filter('Todos')?.textContent?.replace(/\s+/g, ' ').trim()).toBe('Todos 3');
+    expect(filter('Todos')?.textContent?.replace(/\s+/g, ' ').trim()).toBe('Todos 4');
     expect(filter('Cursos')?.textContent?.replace(/\s+/g, ' ').trim()).toBe('Cursos 1');
     expect(filter('Todos')?.getAttribute('aria-current')).toBe('true');
     expect(filter('Videos')?.hasAttribute('aria-current')).toBe(false);
@@ -48,9 +48,9 @@ describe('Topic page', () => {
   it('shows only the chosen kind and announces how many there are', async () => {
     await visit('product', 'pensil-pos', 'videos');
 
-    expect(cards()).toHaveLength(2);
+    expect(cards()).toHaveLength(3);
     expect(filter('Videos')?.getAttribute('aria-current')).toBe('true');
-    expect(page.querySelector('[aria-live="polite"]')?.textContent?.trim()).toBe('2 videos');
+    expect(page.querySelector('[aria-live="polite"]')?.textContent?.trim()).toBe('3 videos');
   });
 
   it('says when the topic has nothing of the chosen kind and offers to see everything', async () => {
@@ -62,6 +62,16 @@ describe('Topic page', () => {
       link.textContent?.includes('Ver todo'),
     );
     expect(seeAll?.getAttribute('href')).toBe('/');
+  });
+
+  it('leads a product to its functional and technical documentation, but not a service', async () => {
+    await visit('product', 'pensil-pos');
+    expect(page.querySelector('a[href="/documentacion/pensil-pos"]')?.textContent).toContain(
+      'Documentación funcional y técnica',
+    );
+
+    await visit('service', 'tiendas-en-linea');
+    expect(page.querySelector('a[href^="/documentacion"]')).toBeNull();
   });
 
   it('invites to discover the topic on pensildevs.com', async () => {

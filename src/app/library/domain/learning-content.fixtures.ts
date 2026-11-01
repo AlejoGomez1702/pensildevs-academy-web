@@ -1,5 +1,6 @@
 // Test data builders for the library. Only imported from specs.
 import { Duration } from '../../shared/kernel/duration';
+import { HostedVideo } from './hosted-video';
 import type { Course, Guide, Lesson, Video } from './learning-content';
 import { YouTubeVideoId } from './youtube-video-id';
 
@@ -9,6 +10,19 @@ export function aYouTubeVideo(id = 'oFdO0jTK0n8'): YouTubeVideoId {
     throw new Error(`Invalid test video id ${id}`);
   }
   return parsed.value;
+}
+
+export function aHostedVideo(): HostedVideo {
+  const hosted = HostedVideo.create({
+    file: '/media/intro.mp4',
+    captions: '/media/intro.es.vtt',
+    poster: '/media/intro.jpg',
+    transcript: ['Bienvenido a Pensil.Pos.', 'Así se cobra una venta.'],
+  });
+  if (!hosted.ok) {
+    throw new Error('Invalid test hosted video');
+  }
+  return hosted.value;
 }
 
 export function aVideo(overrides: Partial<Video> = {}): Video {

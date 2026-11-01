@@ -1,10 +1,15 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
+import { provideAccount } from './account/account.providers';
 import { App } from './app';
 
 describe('App shell', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [App], providers: [provideRouter([])] });
+    TestBed.configureTestingModule({
+      imports: [App],
+      providers: [provideRouter([]), provideHttpClient(), provideAccount()],
+    });
   });
 
   it('offers a skip link as the first focusable element, pointing to the main content', async () => {

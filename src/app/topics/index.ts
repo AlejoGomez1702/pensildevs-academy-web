@@ -8,6 +8,7 @@ export {
   topicPath,
   TOPICS,
   topicsOf,
+  topicDocumentationPath,
   topicSiteUrl,
   topicLink,
   type CatalogTopic,

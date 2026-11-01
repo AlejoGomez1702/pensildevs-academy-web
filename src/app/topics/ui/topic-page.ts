@@ -10,7 +10,7 @@ import {
 } from '../../library';
 import { Icon } from '../../shared/ui/icon';
 import type { TopicGroup } from '../domain/topic';
-import { findTopic, topicSiteUrl } from './topic-catalog';
+import { findTopic, topicDocumentationPath, topicSiteUrl } from './topic-catalog';
 
 const GROUP_EYEBROW: Readonly<Record<TopicGroup, string>> = {
   product: 'Producto',
@@ -53,6 +53,10 @@ export class TopicPage {
   protected readonly siteUrl = computed(() => {
     const topic = this.topic();
     return topic ? topicSiteUrl(topic) : null;
+  });
+  protected readonly documentationPath = computed(() => {
+    const topic = this.topic();
+    return topic ? topicDocumentationPath(topic) : null;
   });
   protected readonly kind = computed(() => kindFilterFromSegment(this.tipo()));
 

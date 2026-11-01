@@ -102,6 +102,8 @@ Navegación principal: **Productos** y **Servicios** (submenús con sus temas, c
 
 ## Fuera de alcance
 
+> La [spec 002](../002-documentacion-y-acceso/spec.md) agrega el ingreso con la cuenta de Pensil.Pos y los videos alojados por el academy.
+
 - Cuentas de usuario, progreso guardado, certificados y evaluaciones.
 - Buscador de texto.
 - Subir o editar contenido desde el academy (se cargará desde un CMS o API en una spec posterior).
